@@ -4,6 +4,8 @@ import PlayerSelection from './Players/PlayerSelection'
 import AnswersList from './Answers/AnswersList'
 import DrawnImage from './DrawnImage'
 import {SketchField, Tools} from 'react-sketch';
+import { Form, Checkbox } from 'semantic-ui-react'
+import _ from 'lodash'
 
 export default class App extends React.Component {
 
@@ -11,16 +13,24 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       view: 'players',
-      viewsList: ['players', 'draw', 'answers', 'guesses', 'result'],
+      viewsList: ['players', 'draw', 'answers', 'guesses', 'results'],
       backgroundColor: 'transparent',
       tool: Tools.Pencil,
       lineColor: 'black',
       drawing: '',
-      player1Name: 'Player 1',
-      player2Name: 'Player 2',
-      player3Name: 'Player 3',
-      player4Name: 'Player 4'
-      // players: [player1Name, player2Name, player3Name, player4Name]
+      player1Name: '',
+      player2Name: '',
+      player3Name: '',
+      player4Name: '',
+      players: [],
+      correctAnswer: '',
+      fakeAnswer1: '',
+      fakeAnswer2: '',
+      fakeAnswer3: '',
+      answers: [],
+      playerIndex: 1,
+      selectedAnswer: '',
+      guesses: {}
     }
   }
 
@@ -33,7 +43,17 @@ export default class App extends React.Component {
   }
 
   letsDraw() {
-    this.setState({ view: 'draw' })
+    let { player1Name, player2Name, player3Name, player4Name } = this.state
+    let playersArray = []
+    playersArray = [player1Name, player2Name]
+
+    if (player3Name !== '') { playersArray.push(player3Name) }
+    if (player4Name !== '') { playersArray.push(player4Name) }
+
+    this.setState({ 
+      view: 'draw',
+      players: playersArray 
+    })
   }
 
   goBack() {
@@ -60,8 +80,59 @@ export default class App extends React.Component {
     }
   }
 
+  updateAnswers(value, type) {
+    switch(type) {
+      case 'correct':
+        this.setState({ correctAnswer: value })
+        break
+      case 'fake1':
+        this.setState({ fakeAnswer1: value })
+        break
+      case 'fake2':
+        this.setState({ fakeAnswer2: value })
+        break
+      case 'fake3':
+        this.setState({ fakeAnswer3: value })
+        break
+    }
+    
+  }
+
+  submitAnswers() {
+    let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
+    let answersArray = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
+    this.setState({ 
+      view: 'guesses',
+      answers: _.shuffle(answersArray)
+    })
+  }
+
+  playerGuess(value) {
+    this.setState({ selectedAnswer: value })
+  }
+
+  submitGuess() {
+    let { guesses, playerIndex, selectedAnswer, players } = this.state
+    console.log(players[playerIndex])
+    guesses[players[playerIndex]] = selectedAnswer
+    this.setState({
+      guesses: guesses,
+      playerIndex: playerIndex + 1
+    })
+  }
+
+  seeResults() {
+    let { guesses, playerIndex, selectedAnswer, players } = this.state
+    guesses[players[playerIndex]] = selectedAnswer
+    this.setState({
+      guesses: guesses,
+      view: 'results'
+    })
+  }
+
   renderView() {
-    const { view, backgroundColor, tool, lineColor, drawing, player1Name, player2Name, player3Name, player4Name } = this.state
+    const { view, backgroundColor, tool, lineColor, drawing, player1Name, player2Name, player3Name, player4Name, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, answers, guesses } = this.state
+
     switch(view) {
       case 'players':
         return (
@@ -80,6 +151,9 @@ export default class App extends React.Component {
       case 'draw':
         return (
         <div>
+          <div>
+            {players.map((player, index) => <p key={index}>{player}</p> )}
+          </div>
           <SketchField
             className="sketchField"
             ref={(c) => this.sketch = c} 
@@ -98,26 +172,115 @@ export default class App extends React.Component {
         return (
           <div>
             <h2>Create some answers</h2>
+            <div>
+              {players.map((player, index) => <p key={index}>{player}</p> )}
+            </div>
             <DrawnImage
               className="drawnImage"
               drawing={drawing}
               width='768px' 
               height='576px'
             />
-            <AnswersList />
+            <div>
+              <label>Correct Answer</label>
+              <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'correct')}/>
+              <label>Fake Answer</label>
+              <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'fake1')}/>
+              <label>Fake Answer</label>
+              <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'fake2')}/>
+              <label>Fake Answer</label>
+              <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'fake3')}/>
+            </div>
+            <button onClick={() => this.submitAnswers()}>Submit Answers</button>
           </div>
         )
       case 'guesses':
-
+        return (
+          <div>
+            <h2>Guess the drawing</h2>
+            <DrawnImage
+              className="drawnImage"
+              drawing={drawing}
+              width='768px' 
+              height='576px'
+            />
+            <div>        
+              <p>{players[playerIndex]}</p>
+              <Form>
+                <Form.Field>
+                  <Checkbox 
+                    label={answers[0]} 
+                    name='guessGroup'
+                    checked={selectedAnswer === 0}
+                    value={0}
+                    onChange={(e, { value }) => this.playerGuess(value)}
+                  />
+                </Form.Field>
+                <Form.Field>  
+                  <Checkbox  
+                    label={answers[1]} 
+                    name='guessGroup'
+                    checked={selectedAnswer === 1}
+                    value={1}
+                    onChange={(e, { value }) => this.playerGuess(value)}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Checkbox 
+                    label={answers[2]} 
+                    name='guessGroup'
+                    checked={selectedAnswer === 2}
+                    value={2}
+                    onChange={(e, { value }) => this.playerGuess(value)}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Checkbox 
+                    label={answers[3]} 
+                    name='guessGroup'
+                    checked={selectedAnswer === 3}
+                    value={3}
+                    onChange={(e, { value }) => this.playerGuess(value)}
+                  />
+                </Form.Field>
+              </Form>
+            </div>
+            {playerIndex !== players.length - 1 ? <button onClick={() => this.submitGuess()}>Submit</button> : <button onClick={() => this.seeResults()}>Submit and See Results</button>}
+          </div>
+        )
       case 'results':
+        let correctIndex = answers.indexOf(correctAnswer)
+        let correctPlayers = []
+        
+        for (let [playerName, guessIndex] of Object.entries(guesses)) {
+          if (guessIndex === correctIndex) {
+            correctPlayers.push(playerName)
+          }
+        }
 
+        return (
+          <div>
+            <h2>results</h2>
+            <DrawnImage
+              className="drawnImage"
+              drawing={drawing}
+              width='768px' 
+              height='576px'
+            />
+            <div>
+              <p>The correct answer is: {correctAnswer}</p>
+            </div>
+            <div>
+              Players who got it correct: {correctPlayers}
+            </div>
+          </div>
+        )
       default:
 
     }
   }
 
   render() {
-    console.log(this.state)
     return (
       <div>
         <h1>squiggle</h1>
