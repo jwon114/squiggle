@@ -3,7 +3,8 @@ import React from 'react'
 import PlayerSelection from './Players/PlayerSelection'
 import AnswersList from './Answers/AnswersList'
 import DrawnImage from './DrawnImage'
-import {SketchField, Tools} from 'react-sketch';
+import DrawingCanvas from './Canvas/DrawingCanvas'
+import { SketchField, Tools } from 'react-sketch';
 import { Form, Checkbox } from 'semantic-ui-react'
 import _ from 'lodash'
 
@@ -14,10 +15,8 @@ export default class App extends React.Component {
     this.state = {
       view: 'players',
       viewsList: ['players', 'draw', 'answers', 'guesses', 'results'],
-      backgroundColor: 'transparent',
-      tool: Tools.Pencil,
-      lineColor: 'black',
-      drawing: '',
+      drawingURL: '',
+      sketch: '',
       player1Name: '',
       player2Name: '',
       player3Name: '',
@@ -35,11 +34,16 @@ export default class App extends React.Component {
   }
 
   saveDrawing() {
-    // console.log(this.sketch.toDataURL())
+    console.log(this.sketch)
+    console.log(this.props.children);
     this.setState({ 
       drawing: this.sketch.toDataURL(),
       view: 'answers'
     })
+  }
+
+  sketch(value) {
+    this.setState({ sketch: value })
   }
 
   letsDraw() {
@@ -113,11 +117,11 @@ export default class App extends React.Component {
 
   submitGuess() {
     let { guesses, playerIndex, selectedAnswer, players } = this.state
-    console.log(players[playerIndex])
     guesses[players[playerIndex]] = selectedAnswer
     this.setState({
       guesses: guesses,
-      playerIndex: playerIndex + 1
+      playerIndex: playerIndex + 1,
+      selectedAnswer: ''
     })
   }
 
@@ -131,12 +135,12 @@ export default class App extends React.Component {
   }
 
   renderView() {
-    const { view, backgroundColor, tool, lineColor, drawing, player1Name, player2Name, player3Name, player4Name, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, answers, guesses } = this.state
+    const { view, drawingURL, player1Name, player2Name, player3Name, player4Name, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, answers, guesses } = this.state
 
     switch(view) {
       case 'players':
         return (
-          <div>
+          <div className='playerSelection'>
             <h2>How many players?</h2>
             <PlayerSelection 
               updateName={(name, playerId) => this.updatePlayerName(name, playerId)}
@@ -149,13 +153,24 @@ export default class App extends React.Component {
           </div>
         )
       case 'draw':
+        // let tools = [
+        //   {
+        //     text: 'Pencil', 
+        //     value: Tools.Pencil
+        //   },
+        //   {
+        //     text: 'Rectangle',
+        //     value: Tools.Rectangle
+        //   }]
         return (
         <div>
           <div>
             {players.map((player, index) => <p key={index}>{player}</p> )}
           </div>
+          <DrawingCanvas getSketch={(value) => this.sketch}/>
+          {/* <Dropdown value={this.state.tool} placeholder='Drawing Tools' selection options={tools} onChange={(e, { value } ) => this.setState({ tool: value })} />
           <SketchField
-            className="sketchField"
+            className='sketchField'
             ref={(c) => this.sketch = c} 
             width='768px' 
             height='576px' 
@@ -163,7 +178,7 @@ export default class App extends React.Component {
             backgroundColor={backgroundColor}
             lineColor={lineColor}
             lineWidth={3}
-          />
+          /> */}
           <button onClick={() => this.saveDrawing()}>Save</button>
           <button onClick={() => this.goBack()}>Go Back</button>
         </div>
@@ -177,7 +192,7 @@ export default class App extends React.Component {
             </div>
             <DrawnImage
               className="drawnImage"
-              drawing={drawing}
+              drawing={drawingURL}
               width='768px' 
               height='576px'
             />
@@ -200,7 +215,7 @@ export default class App extends React.Component {
             <h2>Guess the drawing</h2>
             <DrawnImage
               className="drawnImage"
-              drawing={drawing}
+              drawing={drawingURL}
               width='768px' 
               height='576px'
             />
@@ -263,7 +278,7 @@ export default class App extends React.Component {
             <h2>results</h2>
             <DrawnImage
               className="drawnImage"
-              drawing={drawing}
+              drawing={drawingURL}
               width='768px' 
               height='576px'
             />

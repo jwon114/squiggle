@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'semantic-ui-react'
+import { Button, Card } from 'semantic-ui-react'
 
 export default class PlayerSelection extends React.Component {
 
@@ -32,35 +32,107 @@ export default class PlayerSelection extends React.Component {
     switch(playerCount) {
       case 2:
         return (    
-          <div>
-              <label>Player 1</label>
-              <input type="text" onChange={(e) => this.props.updateName(e.target.value, 1)} value={this.props.player1Name}/>
-              <label>Player 2</label>
-              <input type="text" onChange={(e) => this.props.updateName(e.target.value, 2)} value={this.props.player2Name}/>
+          <div className='playerSelection__cardWrapper'>
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    Player 1
+                  </Card.Header>
+                  <Card.Description>
+                    <input type="text" placeholder='Name' onChange={(e) => this.props.updateName(e.target.value, 1)} value={this.props.player1Name}/>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    Player 2
+                  </Card.Header>
+                  <Card.Description>
+                    <input type="text" placeholder='Name' onChange={(e) => this.props.updateName(e.target.value, 2)} value={this.props.player2Name}/>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
           </div>    
         )
       case 3:
         return (    
-          <div>
-              <label>Player 1</label>
-              <input type="text" onChange={(e) => this.props.updateName(e.target.value, 1)} value={this.props.player1Name}/>
-              <label>Player 2</label>
-              <input type="text" onChange={(e) => this.props.updateName(e.target.value, 2)} value={this.props.player2Name}/>
-              <label>Player 3</label>
-              <input type="text" onChange={(e) => this.props.updateName(e.target.value, 3)} value={this.props.player3Name}/>
+          <div className='playerSelection__cardWrapper'>
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    Player 1
+                  </Card.Header>
+                  <Card.Description>
+                    <input type="text" placeholder='Name' onChange={(e) => this.props.updateName(e.target.value, 1)} value={this.props.player1Name}/>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    Player 2
+                  </Card.Header>
+                  <Card.Description>
+                    <input type="text" placeholder='Name' onChange={(e) => this.props.updateName(e.target.value, 2)} value={this.props.player2Name}/>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    Player 3
+                  </Card.Header>
+                  <Card.Description>
+                    <input type="text" placeholder='Name' onChange={(e) => this.props.updateName(e.target.value, 3)} value={this.props.player3Name}/>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
           </div>    
         )
       case 4:
         return (    
-          <div>
-              <label>Player 1</label>
-              <input type="text" onChange={(e) => this.props.updateName(e.target.value, 1)} value={this.props.player1Name}/>
-              <label>Player 2</label>
-              <input type="text" onChange={(e) => this.props.updateName(e.target.value, 2)} value={this.props.player2Name}/>
-              <label>Player 3</label>
-              <input type="text" onChange={(e) => this.props.updateName(e.target.value, 3)} value={this.props.player3Name}/>
-              <label>Player 4</label>
-              <input type="text" onChange={(e) => this.props.updateName(e.target.value, 4)} value={this.props.player4Name}/>
+          <div className='playerSelection__cardWrapper'>
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    Player 1
+                  </Card.Header>
+                  <Card.Description>
+                    <input type="text" placeholder='Name' onChange={(e) => this.props.updateName(e.target.value, 1)} value={this.props.player1Name}/>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    Player 2
+                  </Card.Header>
+                  <Card.Description>
+                    <input type="text" placeholder='Name' onChange={(e) => this.props.updateName(e.target.value, 2)} value={this.props.player2Name}/>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    Player 3
+                  </Card.Header>
+                  <Card.Description>
+                    <input type="text" placeholder='Name' onChange={(e) => this.props.updateName(e.target.value, 3)} value={this.props.player3Name}/>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    Player 4
+                  </Card.Header>
+                  <Card.Description>
+                    <input type="text" placeholder='Name' onChange={(e) => this.props.updateName(e.target.value, 4)} value={this.props.player4Name}/>
+                  </Card.Description>
+                </Card.Content>
+              </Card>
           </div>    
         )
       default:
@@ -71,7 +143,7 @@ export default class PlayerSelection extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='playerSelection__container'>
         <Button.Group>
           <Button onClick={() => this.updatePlayerCount(2)}>Two</Button>
           <Button onClick={() => this.updatePlayerCount(3)}>Three</Button>
