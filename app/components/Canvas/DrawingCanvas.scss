@@ -4,31 +4,60 @@
 
 .drawingCanvas__main_container {
   display: flex;
+  width: 98%;
+  margin: 0 auto;
 }
 
 .drawingCanvas__toolkit {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  width: 100%;
+  justify-content: space-between;
+  margin-left: 15px;
+}
+
+.drawingCanvas__tools {
+  text-align: center;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.drawingCanvas__tools > .ui.label {
+  margin-bottom: 20px;
+}
+
+.drawingCanvas__tools_buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .drawingCanvas__colors {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.drawingCanvas__colors > .ui.label {
+  margin-bottom: 20px;
+}
+
+.drawingCanvas__colors > .ui.black.button {
+  margin-top: 20px;
 }
 
 .drawingCanvas__line_width {
   text-align: center;
+  border: 2px solid black;
+  padding: 10px;
 }
 
-.drawingCanvas__colors > .ui.label {
-  margin-bottom: 10px;
+.drawingCanvas__line_width > .ui.label {
+  margin-bottom: 20px;
 }
 
-.drawingCanvas__colors > .ui.black.button {
-  margin-top: 10px;
+.drawingCanvas__line_width > .ui.label.pointing {
+  margin-bottom: 0;
 }
 
 .circle-picker {

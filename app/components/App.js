@@ -4,7 +4,7 @@ import PlayerSelection from './Players/PlayerSelection'
 import AnswersList from './Answers/AnswersList'
 import DrawnImage from './DrawnImage/DrawnImage'
 import DrawingCanvas from './Canvas/DrawingCanvas'
-import { Form, Checkbox } from 'semantic-ui-react'
+import { Form, Checkbox, Button } from 'semantic-ui-react'
 import _ from 'lodash'
 
 export default class App extends React.Component {
@@ -15,10 +15,6 @@ export default class App extends React.Component {
       view: 'players',
       viewsList: ['players', 'draw', 'answers', 'guesses', 'results'],
       drawingURL: '',
-      player1Name: '',
-      player2Name: '',
-      player3Name: '',
-      player4Name: '',
       players: [],
       correctAnswer: '',
       fakeAnswer1: '',
@@ -38,17 +34,10 @@ export default class App extends React.Component {
     })
   }
 
-  letsDraw() {
-    let { player1Name, player2Name, player3Name, player4Name } = this.state
-    let playersArray = []
-    playersArray = [player1Name, player2Name]
-
-    if (player3Name !== '') { playersArray.push(player3Name) }
-    if (player4Name !== '') { playersArray.push(player4Name) }
-
-    this.setState({ 
-      view: 'draw',
-      players: playersArray 
+  letsDraw(names) {
+    this.setState({
+      players: names,
+      view: 'draw'
     })
   }
 
@@ -57,23 +46,6 @@ export default class App extends React.Component {
     let viewIndex = viewsList.indexOf(view)
     let newView = viewsList[viewIndex - 1]
     this.setState({ view: newView })
-  }
-
-  updatePlayerName(name, playerId) {
-    switch(playerId) {
-      case 1:
-        this.setState({ player1Name: name })
-        break
-      case 2:
-        this.setState({ player2Name: name })
-        break
-      case 3:
-        this.setState({ player3Name: name })
-        break
-      case 4:
-        this.setState({ player4Name: name })
-        break
-    }
   }
 
   updateAnswers(value, type) {
@@ -91,7 +63,6 @@ export default class App extends React.Component {
         this.setState({ fakeAnswer3: value })
         break
     }
-    
   }
 
   submitAnswers() {
@@ -127,38 +98,32 @@ export default class App extends React.Component {
   }
 
   renderView() {
-    const { view, drawingURL, player1Name, player2Name, player3Name, player4Name, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, answers, guesses } = this.state
+    const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, answers, guesses } = this.state
 
     switch(view) {
       case 'players':
         return (
-          <div className='playerSelection'>
-            <h2>How many players?</h2>
+          <div className='players_container'>
             <PlayerSelection 
-              updateName={(name, playerId) => this.updatePlayerName(name, playerId)}
-              player1Name={player1Name}
-              player2Name={player2Name}
-              player3Name={player3Name}
-              player4Name={player4Name}
+              updateNames={(names) => this.letsDraw(names)}
             />
-            <button onClick={() => this.letsDraw()}>Draw</button>
           </div>
         )
       case 'draw':
         return (
-        <div>
+        <div className='draw_container'>
           <div>
             {players.map((player, index) => <p key={index}>{player}</p> )}
           </div>
           <DrawingCanvas 
             sketchRef={(value) => this.saveDrawing(value)}
           />
-          <button onClick={() => this.goBack()}>Go Back</button>
+          <Button onClick={() => this.goBack()}>Go Back</Button>
         </div>
         )
       case 'answers':
         return (
-          <div>
+          <div className='answers_container'>
             <h2>Create some answers</h2>
             <div>
               {players.map((player, index) => <p key={index}>{player}</p> )}
@@ -181,12 +146,12 @@ export default class App extends React.Component {
               <label>Fake Answer</label>
               <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'fake3')}/>
             </div>
-            <button onClick={() => this.submitAnswers()}>Submit Answers</button>
+            <Button onClick={() => this.submitAnswers()}>Submit Answers</Button>
           </div>
         )
       case 'guesses':
         return (
-          <div>
+          <div className='guesses_container'>
             <h2>Guess the drawing</h2>
             <DrawnImage
               className="drawnImage"
@@ -235,7 +200,7 @@ export default class App extends React.Component {
                 </Form.Field>
               </Form>
             </div>
-            {playerIndex !== players.length - 1 ? <button onClick={() => this.submitGuess()}>Submit</button> : <button onClick={() => this.seeResults()}>Submit and See Results</button>}
+            {playerIndex !== players.length - 1 ? <Button onClick={() => this.submitGuess()}>Submit</Button> : <Button onClick={() => this.seeResults()}>Submit and See Results</Button>}
           </div>
         )
       case 'results':
@@ -266,7 +231,7 @@ export default class App extends React.Component {
           </div>
         )
       default:
-
+        
     }
   }
 

@@ -23,24 +23,6 @@ export default class DrawingCanvas extends React.Component {
 
   render() {
     let { backgroundColor, tool, lineColor, lineWidth } = this.state
-    const toolsOptions = [
-        {
-          text: 'Pencil', 
-          value: Tools.Pencil
-        },
-        {
-          text: 'Rectangle',
-          value: Tools.Rectangle
-        },
-        {
-          text: 'Circle',
-          value: Tools.Circle
-        },
-        {
-          text: 'Line',
-          value: Tools.Line
-        }
-      ]
     const colorOptions = [
       {
         text: 'Black',
@@ -62,7 +44,7 @@ export default class DrawingCanvas extends React.Component {
     const sliderOptions = {
       start: 3,
       min: 1,
-      max: 10,
+      max: 20,
       step: 1,
       onChange: value => { this.setState({ lineWidth: value })}
     }
@@ -84,16 +66,33 @@ export default class DrawingCanvas extends React.Component {
             />
           </div>
           <div className='drawingCanvas__toolkit'>
-            <Dropdown
-              className='drawingCanvas__tool_dropdown' 
-              value={tool} 
-              placeholder='Drawing Tools' 
-              selection 
-              options={toolsOptions} 
-              onChange={(e, { value }) => this.setState({ tool: value })} 
-            />
+            <div className='drawingCanvas__tools'>
+              <Label color='teal' size='huge'>Tool</Label>
+              <Button.Group widths='2' className='drawingCanvas__tools_buttonGroup'>
+                <Button 
+                  onClick={() => this.setState({ tool: Tools.Pencil })}
+                  toggle
+                  active={tool === Tools.Pencil}>Pencil
+                </Button>
+                <Button 
+                  onClick={() => this.setState({ tool: Tools.Rectangle })}
+                  toggle
+                  active={tool === Tools.Rectangle}>Rectangle
+                </Button>
+                <Button 
+                  onClick={() => this.setState({ tool: Tools.Circle })}
+                  toggle
+                  active={tool === Tools.Circle}>Circle
+                </Button>
+                <Button 
+                  onClick={() => this.setState({ tool: Tools.Line })}
+                  toggle
+                  active={tool === Tools.Line}>Line
+                </Button>
+              </Button.Group>
+            </div>
             <div className='drawingCanvas__colors'>
-              <Label>Colours</Label>
+              <Label color='teal' size='huge'>Colours</Label>
               <CirclePicker 
                 color={lineColor}
                 onChange={color => this.setState({ lineColor: color.hex })}
@@ -105,15 +104,16 @@ export default class DrawingCanvas extends React.Component {
               </Button>
             </div>
             <div className='drawingCanvas__line_width'>
-              <Label>Line Width</Label>
+              <Label color='teal' size='huge'>Line Width</Label>
               <Slider 
                 color='black'
                 settings={sliderOptions}
               />
+              <Label size='large' pointing>{lineWidth}</Label>
             </div>
           </div>
         </div>
-        <button onClick={() => this.updateSketch()}>Submit Drawing</button>
+        <Button size='large' onClick={() => this.updateSketch()}>Submit Drawing</Button>
       </div>
     )
   }
