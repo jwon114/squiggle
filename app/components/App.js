@@ -2,9 +2,9 @@ import React from 'react'
 // import PasswordInput from './PasswordInput'
 import PlayerSelection from './Players/PlayerSelection'
 import AnswersList from './Answers/AnswersList'
-import DrawnImage from './DrawnImage'
+import DrawnImage from './DrawnImage/DrawnImage'
 import DrawingCanvas from './Canvas/DrawingCanvas'
-import { SketchField, Tools } from 'react-sketch';
+import { SketchField, Tools } from 'react-sketch'
 import { Form, Checkbox } from 'semantic-ui-react'
 import _ from 'lodash'
 
@@ -16,7 +16,6 @@ export default class App extends React.Component {
       view: 'players',
       viewsList: ['players', 'draw', 'answers', 'guesses', 'results'],
       drawingURL: '',
-      sketch: '',
       player1Name: '',
       player2Name: '',
       player3Name: '',
@@ -33,17 +32,11 @@ export default class App extends React.Component {
     }
   }
 
-  saveDrawing() {
-    console.log(this.sketch)
-    console.log(this.props.children);
-    this.setState({ 
-      drawing: this.sketch.toDataURL(),
-      view: 'answers'
+  saveDrawing(value) {
+    this.setState({
+      drawingURL: value,
+      view: 'answers' 
     })
-  }
-
-  sketch(value) {
-    this.setState({ sketch: value })
   }
 
   letsDraw() {
@@ -153,33 +146,14 @@ export default class App extends React.Component {
           </div>
         )
       case 'draw':
-        // let tools = [
-        //   {
-        //     text: 'Pencil', 
-        //     value: Tools.Pencil
-        //   },
-        //   {
-        //     text: 'Rectangle',
-        //     value: Tools.Rectangle
-        //   }]
         return (
         <div>
           <div>
             {players.map((player, index) => <p key={index}>{player}</p> )}
           </div>
-          <DrawingCanvas getSketch={(value) => this.sketch}/>
-          {/* <Dropdown value={this.state.tool} placeholder='Drawing Tools' selection options={tools} onChange={(e, { value } ) => this.setState({ tool: value })} />
-          <SketchField
-            className='sketchField'
-            ref={(c) => this.sketch = c} 
-            width='768px' 
-            height='576px' 
-            tool={tool}
-            backgroundColor={backgroundColor}
-            lineColor={lineColor}
-            lineWidth={3}
-          /> */}
-          <button onClick={() => this.saveDrawing()}>Save</button>
+          <DrawingCanvas 
+            sketchRef={(value) => this.saveDrawing(value)}
+          />
           <button onClick={() => this.goBack()}>Go Back</button>
         </div>
         )
