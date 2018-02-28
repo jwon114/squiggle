@@ -23,20 +23,16 @@ export default class PlayerSelection extends React.Component {
           player3Name: '',
           player4Name: '' 
         })
-        // this.props.updateName('', 3)
-        // this.props.updateName('', 4)
         break
       case 3:
         this.setState({ 
           player4Name: '' 
         })
-        // this.props.updateName('', 4)
         break
       case 4:
         this.setState({ 
           player4Name: '' 
         })
-        // this.props.updateName('', 4)
         break
     }
     this.setState({ playerCount: count })
