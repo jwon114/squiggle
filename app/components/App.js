@@ -4,7 +4,6 @@ import PlayerSelection from './Players/PlayerSelection'
 import AnswersList from './Answers/AnswersList'
 import DrawnImage from './DrawnImage/DrawnImage'
 import DrawingCanvas from './Canvas/DrawingCanvas'
-import { SketchField, Tools } from 'react-sketch'
 import { Form, Checkbox } from 'semantic-ui-react'
 import _ from 'lodash'
 
@@ -167,8 +166,10 @@ export default class App extends React.Component {
             <DrawnImage
               className="drawnImage"
               drawing={drawingURL}
-              width='768px' 
-              height='576px'
+              // width='768px' 
+              width='75vw'
+              // height='576px'
+              height='75vh'
             />
             <div>
               <label>Correct Answer</label>

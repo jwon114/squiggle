@@ -1,6 +1,8 @@
 import React from 'react'
 import { SketchField, Tools } from 'react-sketch'
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown, Button, Label } from 'semantic-ui-react'
+import { CompactPicker, CirclePicker } from 'react-color'
+import { Slider } from 'react-semantic-ui-range'
 import './DrawingCanvas.scss'
 
 export default class DrawingCanvas extends React.Component {
@@ -10,7 +12,8 @@ export default class DrawingCanvas extends React.Component {
     this.state = {
       backgroundColor: 'transparent',
       tool: Tools.Pencil,
-      lineColor: 'black'
+      lineColor: '#000000',
+      lineWidth: 3
     }
   }
 
@@ -18,17 +21,9 @@ export default class DrawingCanvas extends React.Component {
     this.props.sketchRef(this.sketch.toDataURL())
   }
 
-  selectTool(value) {
-    this.setState({ tool: value })
-  }
-
-  selectColor(value) {
-    this.setState({ lineColor: value })
-  }
-
   render() {
-    let { backgroundColor, tool, lineColor } = this.state
-    let toolsOptions = [
+    let { backgroundColor, tool, lineColor, lineWidth } = this.state
+    const toolsOptions = [
         {
           text: 'Pencil', 
           value: Tools.Pencil
@@ -46,7 +41,7 @@ export default class DrawingCanvas extends React.Component {
           value: Tools.Line
         }
       ]
-    let colorOptions = [
+    const colorOptions = [
       {
         text: 'Black',
         value: 'black'
@@ -64,35 +59,60 @@ export default class DrawingCanvas extends React.Component {
         value: 'blue'
       }
     ]
-    
+    const sliderOptions = {
+      start: 3,
+      min: 1,
+      max: 10,
+      step: 1,
+      onChange: value => { this.setState({ lineWidth: value })}
+    }
     return (
       <div className='drawingCanvas__container'>
-        <Dropdown
-          className='drawingCanvas__tool_dropdown' 
-          value={tool} 
-          placeholder='Drawing Tools' 
-          selection 
-          options={toolsOptions} 
-          onChange={(e, { value }) => this.selectTool(value)} 
-        />
-        <Dropdown
-          className='drawingCanvas__color_dropdown' 
-          value={lineColor} 
-          placeholder='Line Color' 
-          selection 
-          options={colorOptions} 
-          onChange={(e, { value }) => this.selectColor(value)} 
-        />
-        <SketchField
-          className='drawingCanvas__sketchfield'
-          ref={c => this.sketch = c} 
-          width='768px' 
-          height='576px' 
-          tool={tool}
-          backgroundColor={backgroundColor}
-          lineColor={lineColor}
-          lineWidth={3}
-        />
+        <div className='drawingCanvas__main_container'>
+          <div className='drawingCanvas__sketchField_container'>
+            <SketchField
+              className='drawingCanvas__sketchField'
+              ref={c => this.sketch = c} 
+              // width='768px' 
+              width='75vw'
+              // height='576px'
+              height='75vh' 
+              tool={tool}
+              backgroundColor={backgroundColor}
+              lineColor={lineColor}
+              lineWidth={lineWidth}
+            />
+          </div>
+          <div className='drawingCanvas__toolkit'>
+            <Dropdown
+              className='drawingCanvas__tool_dropdown' 
+              value={tool} 
+              placeholder='Drawing Tools' 
+              selection 
+              options={toolsOptions} 
+              onChange={(e, { value }) => this.setState({ tool: value })} 
+            />
+            <div className='drawingCanvas__colors'>
+              <Label>Colours</Label>
+              <CirclePicker 
+                color={lineColor}
+                onChange={color => this.setState({ lineColor: color.hex })}
+              />
+              <Button 
+                color='black'
+                onClick={() => this.setState({ lineColor: '#000000' })}>
+                Set to Default Color
+              </Button>
+            </div>
+            <div className='drawingCanvas__line_width'>
+              <Label>Line Width</Label>
+              <Slider 
+                color='black'
+                settings={sliderOptions}
+              />
+            </div>
+          </div>
+        </div>
         <button onClick={() => this.updateSketch()}>Submit Drawing</button>
       </div>
     )
