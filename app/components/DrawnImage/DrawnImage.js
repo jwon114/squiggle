@@ -4,7 +4,7 @@ import './DrawnImage.scss'
 export default function DrawnImage(props) {
   return (
     <div
-      className="drawnImage"
+      className="drawnImage__image"
       style={
         {
           backgroundImage: `url(${props.drawing})`,

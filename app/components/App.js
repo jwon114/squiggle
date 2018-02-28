@@ -124,10 +124,10 @@ export default class App extends React.Component {
       case 'answers':
         return (
           <div className='answers_container'>
-            <h2>Create some answers</h2>
             <div>
               {players.map((player, index) => <p key={index}>{player}</p> )}
             </div>
+            <h2>Create some answers</h2>
             <DrawnImage
               className="drawnImage"
               drawing={drawingURL}
@@ -136,7 +136,8 @@ export default class App extends React.Component {
               // height='576px'
               height='75vh'
             />
-            <div>
+            <AnswersList />
+            {/* <div>
               <label>Correct Answer</label>
               <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'correct')}/>
               <label>Fake Answer</label>
@@ -146,7 +147,7 @@ export default class App extends React.Component {
               <label>Fake Answer</label>
               <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'fake3')}/>
             </div>
-            <Button onClick={() => this.submitAnswers()}>Submit Answers</Button>
+            <Button onClick={() => this.submitAnswers()}>Submit Answers</Button> */}
           </div>
         )
       case 'guesses':
