@@ -23,7 +23,8 @@ export default class App extends React.Component {
       correctAnswer: '',
       playerAnswers: [],
       playerTurnIndex: 0,
-      guesses: {}
+      guesses: {},
+      round: 1
     }
   }
 
@@ -67,8 +68,18 @@ export default class App extends React.Component {
     })
   }
 
+  startNextRound() {
+    let { players, round } = this.state
+    players.push(players.shift())
+    this.setState({
+      view: 'draw',
+      round: round + 1,
+      players: players
+    })
+  }
+
   renderView() {
-    const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses } = this.state
+    const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses, round } = this.state
 
     switch(view) {
       case 'players':
@@ -138,6 +149,9 @@ export default class App extends React.Component {
                 guesses={guesses}
                 correctAnswer={correctAnswer}
                 playerAnswers={playerAnswers}
+                round={round}
+                players={players}
+                nextRound={() => this.startNextRound()}
               />
             </div>
           </div>

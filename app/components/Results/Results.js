@@ -1,21 +1,17 @@
 import React from 'react'
-import { Header, List, Label } from 'semantic-ui-react'
+import { Header, List, Label, Button } from 'semantic-ui-react'
 import './Results.scss'
 
 export default function Results(props) {
-  let { guesses, correctAnswer, playerAnswers } = props
+  let { guesses, correctAnswer, playerAnswers, round, players, nextRound } = props
   let correctIndex = playerAnswers.indexOf(correctAnswer)
   let correctPlayers = []
   
   for (let [playerName, guessIndex] of Object.entries(guesses)) {
-    console.log(guesses)
-    console.log(playerName)
     if (guessIndex === correctIndex) {
       correctPlayers.push(playerName)
     }
   }
-
-  console.log(correctPlayers)
   
   return (
     <div className='results__container'>
@@ -31,6 +27,7 @@ export default function Results(props) {
         </List.Item>
         {correctPlayers.map((player, index) => <List.Item key={index}>{player}</List.Item>)}
       </List>
+      {players.length !== round ? <Button onClick={() => nextRound()}>Next Round</Button> : ''}
     </div>
   )
 }
