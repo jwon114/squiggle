@@ -8,6 +8,7 @@ export default function DrawnImage(props) {
       style={
         {
           backgroundImage: `url(${props.drawing})`,
+          backgroundSize: 'cover',
           height: props.height,
           width: props.width,
         }

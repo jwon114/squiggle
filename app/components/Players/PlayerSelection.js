@@ -1,5 +1,9 @@
 import React from 'react'
-import { Button, Card, Input, Message, Header } from 'semantic-ui-react'
+import { Button, Card, Input, Message, Header, Image } from 'semantic-ui-react'
+import P1Image from './images/doge.png'
+import P2Image from './images/pun_dog.jpg'
+import P3Image from './images/sloth.jpg'
+import P4Image from './images/koala.jpg'
 import _ from 'lodash'
 import './PlayerSelection.scss'
 
@@ -109,13 +113,15 @@ export default class PlayerSelection extends React.Component {
       case 2:
         return (    
           <div className='playerSelection__card_wrapper'>
-              <Card>
+              <Card raised>
                 <Card.Content>
-                  <Card.Header>
+                  <Card.Header textAlign='center'>
                     Player 1
                   </Card.Header>
+                  <Image className='playerSelection__player_image' src={P1Image} />
                   <Card.Description>
                     <Input 
+                      fluid
                       placeholder='Name'
                       onChange={(e, { value }) => this.updatePlayerName(value, 1)}
                       value={player1Name}
@@ -123,13 +129,15 @@ export default class PlayerSelection extends React.Component {
                   </Card.Description>
                 </Card.Content>
               </Card>
-              <Card>
+              <Card raised>
                 <Card.Content>
-                  <Card.Header>
+                  <Card.Header textAlign='center'>
                     Player 2
                   </Card.Header>
+                  <Image className='playerSelection__player_image' src={P2Image} />
                   <Card.Description>
                     <Input 
+                      fluid
                       placeholder='Name'
                       onChange={(e, { value }) => this.updatePlayerName(value, 2)}
                       value={player2Name}
@@ -142,13 +150,15 @@ export default class PlayerSelection extends React.Component {
       case 3:
         return (    
           <div className='playerSelection__card_wrapper'>
-              <Card>
+              <Card raised>
                 <Card.Content>
-                  <Card.Header>
+                  <Card.Header textAlign='center'>
                     Player 1
                   </Card.Header>
+                  <Image className='playerSelection__player_image' src={P1Image} />
                   <Card.Description>
-                    <Input 
+                    <Input
+                      fluid 
                       placeholder='Name'
                       onChange={(e, { value }) => this.updatePlayerName(value, 1)}
                       value={player1Name}
@@ -156,13 +166,15 @@ export default class PlayerSelection extends React.Component {
                   </Card.Description>
                 </Card.Content>
               </Card>
-              <Card>
+              <Card raised>
                 <Card.Content>
-                  <Card.Header>
+                  <Card.Header textAlign='center'>
                     Player 2
                   </Card.Header>
+                  <Image className='playerSelection__player_image' src={P2Image} />
                   <Card.Description>
-                    <Input 
+                    <Input
+                      fluid 
                       placeholder='Name'
                       onChange={(e, { value }) => this.updatePlayerName(value, 2)}
                       value={player2Name}
@@ -170,13 +182,15 @@ export default class PlayerSelection extends React.Component {
                   </Card.Description>
                 </Card.Content>
               </Card>
-              <Card>
+              <Card raised>
                 <Card.Content>
-                  <Card.Header>
+                  <Card.Header textAlign='center'>
                     Player 3
                   </Card.Header>
+                  <Image className='playerSelection__player_image' src={P3Image} />
                   <Card.Description>
-                    <Input 
+                    <Input
+                      fluid 
                       placeholder='Name'
                       onChange={(e, { value }) => this.updatePlayerName(value, 3)}
                       value={player3Name}
@@ -189,13 +203,15 @@ export default class PlayerSelection extends React.Component {
       case 4:
         return (    
           <div className='playerSelection__card_wrapper'>
-              <Card>
+              <Card raised>
                 <Card.Content>
-                  <Card.Header>
+                  <Card.Header textAlign='center'>
                     Player 1
                   </Card.Header>
+                  <Image className='playerSelection__player_image' src={P1Image} />
                   <Card.Description>
-                    <Input 
+                    <Input
+                      fluid 
                       placeholder='Name'
                       onChange={(e, { value }) => this.updatePlayerName(value, 1)}
                       value={player1Name}
@@ -203,13 +219,15 @@ export default class PlayerSelection extends React.Component {
                   </Card.Description>
                 </Card.Content>
               </Card>
-              <Card>
+              <Card raised>
                 <Card.Content>
-                  <Card.Header>
+                  <Card.Header textAlign='center'>
                     Player 2
                   </Card.Header>
+                  <Image className='playerSelection__player_image' src={P2Image} />
                   <Card.Description>
-                    <Input 
+                    <Input
+                      fluid 
                       placeholder='Name'
                       onChange={(e, { value }) => this.updatePlayerName(value, 2)}
                       value={player2Name}
@@ -217,13 +235,15 @@ export default class PlayerSelection extends React.Component {
                   </Card.Description>
                 </Card.Content>
               </Card>
-              <Card>
+              <Card raised>
                 <Card.Content>
-                  <Card.Header>
+                  <Card.Header textAlign='center'>
                     Player 3
                   </Card.Header>
+                  <Image className='playerSelection__player_image' src={P3Image} />
                   <Card.Description>
-                    <Input 
+                    <Input
+                      fluid 
                       placeholder='Name'
                       onChange={(e, { value }) => this.updatePlayerName(value, 3)}
                       value={player3Name}
@@ -231,13 +251,15 @@ export default class PlayerSelection extends React.Component {
                   </Card.Description>
                 </Card.Content>
               </Card>
-              <Card>
+              <Card raised>
                 <Card.Content>
-                  <Card.Header>
+                  <Card.Header textAlign='center'>
                     Player 4
                   </Card.Header>
+                  <Image className='playerSelection__player_image' src={P4Image} />
                   <Card.Description>
-                    <Input 
+                    <Input
+                      fluid 
                       placeholder='Name'
                       onChange={(e, { value }) => this.updatePlayerName(value, 4)}
                       value={player4Name}
@@ -279,16 +301,18 @@ export default class PlayerSelection extends React.Component {
           </Button.Group>
         </div>
         {this.renderView()}
-        <div className='playerSelection__submit_button'>
-          <Button
-            onClick={() => this.submitNames()}
-            size={'massive'}
-            disabled={this.validateNameInput()}>
-            Let's Draw
-          </Button>
-        </div>
-        <div className='playerSelection__error'>
-          {this.state.error ? <Message compact negative>{this.state.error}</Message> : ''}
+        <div className='playerSelection__footer'>
+          <div className='playerSelection__error'>
+            {this.state.error ? <Message compact negative>{this.state.error}</Message> : ''}
+          </div>
+          <div className='playerSelection__submit_button'>
+            <Button
+              onClick={() => this.submitNames()}
+              size={'massive'}
+              disabled={this.validateNameInput()}>
+              Let's Draw
+            </Button>
+          </div>
         </div>
       </div>
     )

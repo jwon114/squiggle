@@ -15,14 +15,18 @@ export default function Results(props) {
   
   return (
     <div className='results__container'>
-      <Header size='huge'>Results</Header>
-        <div>
-          <p>The correct answer is: {correctAnswer}</p>
-        </div>
-        <Label>Players who got it correct:</Label>
-        <List horizontal>
-           {correctPlayers.map(player => <List.Content>{player}</List.Content>)}
-        </List>
+      <List size='huge' horizontal>
+        <List.Item>
+          <Label size='huge'>The correct answer is: </Label>
+        </List.Item>
+        <List.Item>
+          <Header>{correctAnswer}</Header>
+        </List.Item>
+        <List.Item>
+          <Label size='huge'>Players who got it correct: </Label>
+        </List.Item>
+        {correctPlayers.map((player, index) => <List.Item key={index}>{player}</List.Item>)}
+      </List>
     </div>
   )
 }

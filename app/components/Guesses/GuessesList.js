@@ -91,7 +91,7 @@ export default class GuessesList extends React.Component {
               />
             </Form.Field>
           </Form>
-          {playerIndex !== players.length - 1 ? <Button onClick={() => this.submitGuess()}>Submit</Button> : <Button onClick={() => this.finalGuesses()}>Submit and See Results</Button>}
+          {playerIndex !== players.length - 1 ? <Button size='huge' onClick={() => this.submitGuess()}>Submit</Button> : <Button size='huge' onClick={() => this.finalGuesses()}>Submit and See Results</Button>}
         </div>
       </div>
     )

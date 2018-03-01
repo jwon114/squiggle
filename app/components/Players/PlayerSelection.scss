@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 75px;
+  margin: 50px 0;
 }
 
 .playerSelection__card_wrapper {
@@ -17,12 +17,23 @@
   margin: 0
 }
 
+.playerSelection__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+
 .playerSelection__submit_button {
   display: flex;
   justify-content: flex-end;
+  margin-left: 25px;
 }
 
 .playerSelection__error {
   display: flex;
   justify-content: flex-end;
+}
+
+.playerSelection__player_image {
+  margin: 10px 0;
 }

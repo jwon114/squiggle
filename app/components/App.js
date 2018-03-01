@@ -137,8 +137,8 @@ export default class App extends React.Component {
               <DrawnImage
                 className="drawnImage"
                 drawing={drawingURL}
-                width='768px' 
-                height='576px'
+                width='75vw' 
+                height='75vh'
               />
               <Results 
                 guesses={guesses}

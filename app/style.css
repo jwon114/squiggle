@@ -13,3 +13,7 @@ body {
   margin: 0 auto;
   height: 75vh;
 }
+
+.results_main > .drawnImage__image {
+  margin: 0 auto;
+}
