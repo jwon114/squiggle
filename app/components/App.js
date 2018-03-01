@@ -1,5 +1,6 @@
 import React from 'react'
 import PlayerSelection from './Players/PlayerSelection'
+import PlayerIcon from './Players/PlayerIcon'
 import DrawingCanvas from './Canvas/DrawingCanvas'
 import DrawnImage from './DrawnImage/DrawnImage'
 import AnswersList from './Answers/AnswersList'
@@ -143,11 +144,13 @@ export default class App extends React.Component {
   }
 
   render() {
-    let { players } = this.state
+    let { players, playerTurnIndex } = this.state
     return (
       <div>
-        <Image src={SquiggleLogoFull} />
-        {players.length !== 0 ? players : ''}
+        <header className='app_header'>
+          <Image src={SquiggleLogoFull} />
+          {players.length !== 0 ? <PlayerIcon players={players} playerTurnIndex={playerTurnIndex} /> : ''}
+        </header>
         {this.renderView()}
       </div>
     )
