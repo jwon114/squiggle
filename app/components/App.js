@@ -17,9 +17,9 @@ export default class App extends React.Component {
       drawingURL: '',
       players: [],
       correctAnswer: '',
-      fakeAnswer1: '',
-      fakeAnswer2: '',
-      fakeAnswer3: '',
+      // fakeAnswer1: '',
+      // fakeAnswer2: '',
+      // fakeAnswer3: '',
       answers: [],
       playerIndex: 1,
       selectedAnswer: '',
@@ -65,12 +65,13 @@ export default class App extends React.Component {
     }
   }
 
-  submitAnswers() {
-    let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
-    let answersArray = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
+  submitAnswers(answersArray, correct) {
+    // let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
+    // let answersArray = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
     this.setState({ 
       view: 'guesses',
-      answers: _.shuffle(answersArray)
+      answers: _.shuffle(answersArray),
+      correctAnswer: correct
     })
   }
 
@@ -127,7 +128,6 @@ export default class App extends React.Component {
             <div>
               {players.map((player, index) => <p key={index}>{player}</p> )}
             </div>
-            <h2>Create some answers</h2>
             <DrawnImage
               className="drawnImage"
               drawing={drawingURL}
@@ -136,7 +136,9 @@ export default class App extends React.Component {
               // height='576px'
               height='75vh'
             />
-            <AnswersList />
+            <AnswersList 
+              answers={(answersArray, correct) => this.submitAnswers(answersArray, correct)}
+            />
             {/* <div>
               <label>Correct Answer</label>
               <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'correct')}/>

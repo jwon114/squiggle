@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Input } from 'semantic-ui-react'
+import { Button, Card, Input, Message } from 'semantic-ui-react'
 import _ from 'lodash'
 import './PlayerSelection.scss'
 
@@ -12,7 +12,8 @@ export default class PlayerSelection extends React.Component {
       player2Name: '',
       player3Name: '',
       player4Name: '',
-      playerCount: 2
+      playerCount: 2,
+      error: ''
     }
   }
 
@@ -74,21 +75,31 @@ export default class PlayerSelection extends React.Component {
     return true
   }
 
+  checkNames() {
+    let { player1Name, player2Name, player3Name, player4Name } = this.state 
+    let namesArray = [player1Name, player2Name, player3Name, player4Name]
+    return _.compact(namesArray).length === _(namesArray).compact().uniq().value().length
+  }
+
   submitNames() {
     let { playerCount, player1Name, player2Name, player3Name, player4Name } = this.state 
     let playersArray = []
-    switch(playerCount) {
-      case 2:
-        playersArray = [player1Name, player2Name]
-        break
-      case 3:
-        playersArray = [player1Name, player2Name, player3Name]
-        break
-      case 4:
-        playersArray = [player1Name, player2Name, player3Name, player4Name]
-        break
+    if (!this.checkNames()) {
+      this.setState({ error: 'Cannot have duplicate player names' })
+    } else {
+      switch(playerCount) {
+        case 2:
+          playersArray = [player1Name, player2Name]
+          break
+        case 3:
+          playersArray = [player1Name, player2Name, player3Name]
+          break
+        case 4:
+          playersArray = [player1Name, player2Name, player3Name, player4Name]
+          break
+      }
+      this.props.updateNames(_.shuffle(playersArray))
     }
-    this.props.updateNames(_.shuffle(playersArray))
   }
 
   renderView() {
@@ -267,13 +278,17 @@ export default class PlayerSelection extends React.Component {
           </Button.Group>
         </div>
         {this.renderView()}
-        <Button 
-          floated={'right'}
-          onClick={() => this.submitNames()}
-          size={'massive'}
-          disabled={this.validateNameInput()}>
-          Let's Draw
-        </Button>
+        <div className='playerSelection__submit_button'>
+          <Button
+            onClick={() => this.submitNames()}
+            size={'massive'}
+            disabled={this.validateNameInput()}>
+            Let's Draw
+          </Button>
+        </div>
+        <div className='playerSelection__error'>
+          {this.state.error ? <Message compact negative>{this.state.error}</Message> : ''}
+        </div>
       </div>
     )
   }

@@ -1,0 +1,8 @@
+.answersList__answers_container {
+  display: flex;
+  justify-content: center;
+}
+
+.answersList__correct_answer > label {
+  color: green;
+}

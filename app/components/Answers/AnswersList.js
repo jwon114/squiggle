@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Input, Label } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
+import './AnswersList.scss'
 
 export default class AnswersList extends React.Component {
   
@@ -13,8 +14,8 @@ export default class AnswersList extends React.Component {
     }
   }
 
-  updateAnswers(value) {
-    switch(value) {
+  updateAnswers(value, type) {
+    switch(type) {
       case 'correct':
         this.setState({ correctAnswer: value })
         break
@@ -30,28 +31,58 @@ export default class AnswersList extends React.Component {
     }
   }
 
+  validateAnswerInput() {
+    let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
+    if (correctAnswer !== '' && fakeAnswer1 !== '' && fakeAnswer2 !== '' && fakeAnswer3 !== '') {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  sendAnswers() {
+    let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
+    let answers = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
+    this.props.answers(answers, correctAnswer)
+  }
+
   render() {
+    let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
     return (
       <div className='answersList__container'>
+          <h2>Create some answers</h2>
           <div className='answersList__answers_container'>
-            <Label>Correct Answer</Label>
-            <Input 
-              onChange={(e, { value }) => this.updateAnswers(value, 'correct')}
-            />
-            <Label>Fake Answer</Label>
-            <Input 
-              onChange={(e, { value }) => this.updateAnswers(value, 'fake1')}
-            />
-            <Label>Fake Answer</Label>
-            <Input 
-              onChange={(e, { value }) => this.updateAnswers(value, 'fake2')}
-            />
-            <Label>Fake Answer</Label>
-            <Input 
-              onChange={(e, { value }) => this.updateAnswers(value, 'fake3')}
-            />
+            <Form>
+              <Form.Group>
+                <Form.Input
+                  className='answersList__correct_answer' 
+                  label='Correct Answer'
+                  value={correctAnswer}
+                  onChange={(e, { value }) => this.updateAnswers(value, 'correct')}
+                />
+                <Form.Input 
+                  label='Fake Answer 1'
+                  value={fakeAnswer1}
+                  onChange={(e, { value }) => this.updateAnswers(value, 'fake1')}
+                />
+                <Form.Input 
+                  label='Fake Answer 2'
+                  value={fakeAnswer2}
+                  onChange={(e, { value }) => this.updateAnswers(value, 'fake2')}
+                />
+                <Form.Input 
+                  label='Fake Answer 3'
+                  value={fakeAnswer3}
+                  onChange={(e, { value }) => this.updateAnswers(value, 'fake3')}
+                />
+              </Form.Group>
+            </Form>
           </div>
-        <Button onClick={() => this.submitAnswers()}>Submit Answers</Button>
+        <Button 
+          size='huge'
+          disabled={this.validateAnswerInput()}
+          onClick={() => this.sendAnswers()}>Submit Answers
+        </Button>
       </div>
     )
   }
