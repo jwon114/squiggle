@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Header } from 'semantic-ui-react'
+import { Button, Form, Header, Message } from 'semantic-ui-react'
 import './AnswersList.scss'
 
 export default class AnswersList extends React.Component {
@@ -10,7 +10,8 @@ export default class AnswersList extends React.Component {
       correctAnswer: '',
       fakeAnswer1: '',
       fakeAnswer2: '',
-      fakeAnswer3: ''
+      fakeAnswer3: '',
+      error: ''
     }
   }
 
@@ -40,17 +41,27 @@ export default class AnswersList extends React.Component {
     }
   }
 
+  checkAnswers() {
+    let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state 
+    let answerArray = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
+    return _.compact(answerArray).length === _(answerArray).compact().uniq().value().length
+  }
+
   sendAnswers() {
     let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
-    let answers = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
-    this.props.answers(answers, correctAnswer)
+    if (!this.checkAnswers()) {
+      this.setState({ error: 'Cannot have duplicate answers' })
+    } else {
+      let answers = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
+      this.props.answers(answers, correctAnswer)
+    }
   }
 
   render() {
-    let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
+    let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, error } = this.state
     return (
       <div className='answersList__container'>
-          <Header size='huge'>Create Answers</Header>
+          <Header textAlign='center' size='huge'>Create Your Answers</Header>
           <div className='answersList__answers_container'>
             <Form>
               <Form.Group>
@@ -82,11 +93,12 @@ export default class AnswersList extends React.Component {
               </Form.Group>
             </Form>
           </div>
-        <Button 
-          size='huge'
-          disabled={this.validateAnswerInput()}
-          onClick={() => this.sendAnswers()}>Submit Answers
-        </Button>
+          <Button 
+            size='huge'
+            disabled={this.validateAnswerInput()}
+            onClick={() => this.sendAnswers()}>Submit Answers
+          </Button>
+          {error !== '' ? <Message compact negative>{error}</Message> : ''}
       </div>
     )
   }

@@ -3,11 +3,11 @@ body {
 }
 
 .players_container {
- width: 90%;
- margin: 0 auto; 
+  width: 90%;
+  margin: 0 auto; 
 }
 
-.answers_main {
+.answers_main, .guesses_main {
   display: flex;
   width: 98%;
   margin: 0 auto;

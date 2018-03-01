@@ -1,11 +1,11 @@
 import React from 'react'
 // import PasswordInput from './PasswordInput'
 import PlayerSelection from './Players/PlayerSelection'
-import AnswersList from './Answers/AnswersList'
-import DrawnImage from './DrawnImage/DrawnImage'
 import DrawingCanvas from './Canvas/DrawingCanvas'
-import SquiggleLogoSmall from '../../public/squiggle_logo_small.png'
-import SquiggleLogoFull from '../../public/squiggle_logo_full.png'
+import DrawnImage from './DrawnImage/DrawnImage'
+import AnswersList from './Answers/AnswersList'
+import GuessesList from './Guesses/GuessesList'
+import SquiggleLogoFull from '../../public/images/squiggle_logo_full.png'
 import { Form, Checkbox, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
 
@@ -20,8 +20,8 @@ export default class App extends React.Component {
       players: [],
       correctAnswer: '',
       answers: [],
-      playerIndex: 1,
-      selectedAnswer: '',
+      // playerIndex: 1,
+      // selectedAnswer: '',
       guesses: {}
     }
   }
@@ -75,18 +75,22 @@ export default class App extends React.Component {
     })
   }
 
-  playerGuess(value) {
-    this.setState({ selectedAnswer: value })
-  }
+  // playerGuess(value) {
+  //   this.setState({ selectedAnswer: value })
+  // }
 
-  submitGuess() {
-    let { guesses, playerIndex, selectedAnswer, players } = this.state
-    guesses[players[playerIndex]] = selectedAnswer
-    this.setState({
-      guesses: guesses,
-      playerIndex: playerIndex + 1,
-      selectedAnswer: ''
-    })
+  // submitGuess() {
+  //   let { guesses, playerIndex, selectedAnswer, players } = this.state
+  //   guesses[players[playerIndex]] = selectedAnswer
+  //   this.setState({
+  //     guesses: guesses,
+  //     playerIndex: playerIndex + 1,
+  //     selectedAnswer: ''
+  //   })
+  // }
+
+  submitGuesses() {
+
   }
 
   seeResults() {
@@ -126,9 +130,7 @@ export default class App extends React.Component {
               <DrawnImage
                 className="drawnImage"
                 drawing={drawingURL}
-                // width='768px' 
                 width='75vw'
-                // height='576px'
                 height='75vh'
               />
               <AnswersList 
@@ -140,15 +142,20 @@ export default class App extends React.Component {
       case 'guesses':
         return (
           <div className='guesses_container'>
-            <h2>Guess the drawing</h2>
-            <DrawnImage
-              className="drawnImage"
-              drawing={drawingURL}
-              width='768px' 
-              height='576px'
-            />
-            <div>        
-              <p>{players[playerIndex]}</p>
+            <div className='guesses_main'>
+              <DrawnImage
+                className="drawnImage"
+                drawing={drawingURL}
+                width='75vw' 
+                height='75vh'
+              />
+              <GuessesList 
+                sendGuesses={(guesses) => this.submitGuesses(guesses)}
+                players={players}
+                answers={answers}
+              />  
+            </div>
+              {/* <p>{players[playerIndex]}</p>
               <Form>
                 <Form.Field>
                   <Checkbox 
@@ -186,9 +193,8 @@ export default class App extends React.Component {
                     onChange={(e, { value }) => this.playerGuess(value)}
                   />
                 </Form.Field>
-              </Form>
-            </div>
-            {playerIndex !== players.length - 1 ? <Button onClick={() => this.submitGuess()}>Submit</Button> : <Button onClick={() => this.seeResults()}>Submit and See Results</Button>}
+              </Form> */}
+            {/* {playerIndex !== players.length - 1 ? <Button onClick={() => this.submitGuess()}>Submit</Button> : <Button onClick={() => this.seeResults()}>Submit and See Results</Button>} */}
           </div>
         )
       case 'results':
