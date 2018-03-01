@@ -10,15 +10,17 @@ export default class GuessesList extends React.Component {
       selectedAnswer: '',
       playerIndex: 0,
       players: [],
-      guesses: {}
+      guesses: {},
+      playerAnswers: []
     }
   }
 
   componentDidMount() {
-    let { players } = this.props
+    let { players, playerAnswers } = this.props
     players.shift()
     this.setState({
-      players: players
+      players: players,
+      playerAnswers: playerAnswers
     })
   }
 
@@ -39,8 +41,7 @@ export default class GuessesList extends React.Component {
   }
   
   render() {
-    let { players, answers } = this.props
-    let { playerIndex, selectedAnswer } = this.state
+    let { playerIndex, selectedAnswer, players, playerAnswers } = this.state
     return (
       <div className='guessesList__container'>
         <Header textAlign='center' size='large'>Guess the Drawing</Header>
@@ -55,7 +56,7 @@ export default class GuessesList extends React.Component {
           <Form>
             <Form.Field>
               <Checkbox 
-                label={answers[0]} 
+                label={playerAnswers[0]} 
                 name='guessGroup'
                 checked={selectedAnswer === 0}
                 value={0}
@@ -64,7 +65,7 @@ export default class GuessesList extends React.Component {
             </Form.Field>
             <Form.Field>  
               <Checkbox  
-                label={answers[1]} 
+                label={playerAnswers[1]} 
                 name='guessGroup'
                 checked={selectedAnswer === 1}
                 value={1}
@@ -73,7 +74,7 @@ export default class GuessesList extends React.Component {
             </Form.Field>
             <Form.Field>
               <Checkbox 
-                label={answers[2]} 
+                label={playerAnswers[2]} 
                 name='guessGroup'
                 checked={selectedAnswer === 2}
                 value={2}
@@ -82,7 +83,7 @@ export default class GuessesList extends React.Component {
             </Form.Field>
             <Form.Field>
               <Checkbox 
-                label={answers[3]} 
+                label={playerAnswers[3]} 
                 name='guessGroup'
                 checked={selectedAnswer === 3}
                 value={3}

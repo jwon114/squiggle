@@ -5,6 +5,7 @@ import DrawingCanvas from './Canvas/DrawingCanvas'
 import DrawnImage from './DrawnImage/DrawnImage'
 import AnswersList from './Answers/AnswersList'
 import GuessesList from './Guesses/GuessesList'
+import Results from './Results/Results'
 import SquiggleLogoFull from '../../public/images/squiggle_logo_full.png'
 import { Form, Checkbox, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
@@ -19,9 +20,8 @@ export default class App extends React.Component {
       drawingURL: '',
       players: [],
       correctAnswer: '',
-      answers: [],
-      // playerIndex: 1,
-      // selectedAnswer: '',
+      playerAnswers: [],
+      playerTurnIndex: 0,
       guesses: {}
     }
   }
@@ -50,44 +50,13 @@ export default class App extends React.Component {
     })
   }
 
-  updateAnswers(value, type) {
-    switch(type) {
-      case 'correct':
-        this.setState({ correctAnswer: value })
-        break
-      case 'fake1':
-        this.setState({ fakeAnswer1: value })
-        break
-      case 'fake2':
-        this.setState({ fakeAnswer2: value })
-        break
-      case 'fake3':
-        this.setState({ fakeAnswer3: value })
-        break
-    }
-  }
-
   submitAnswers(answersArray, correct) {
     this.setState({ 
-      view: 'guesses',
-      answers: _.shuffle(answersArray),
-      correctAnswer: correct
+      playerAnswers: answersArray,
+      correctAnswer: correct,
+      view: 'guesses'
     })
   }
-
-  // playerGuess(value) {
-  //   this.setState({ selectedAnswer: value })
-  // }
-
-  // submitGuess() {
-  //   let { guesses, playerIndex, selectedAnswer, players } = this.state
-  //   guesses[players[playerIndex]] = selectedAnswer
-  //   this.setState({
-  //     guesses: guesses,
-  //     playerIndex: playerIndex + 1,
-  //     selectedAnswer: ''
-  //   })
-  // }
 
   seeResults(guesses) {
     this.setState({
@@ -97,7 +66,7 @@ export default class App extends React.Component {
   }
 
   renderView() {
-    const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, answers, guesses } = this.state
+    let { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses } = this.state
 
     switch(view) {
       case 'players':
@@ -128,7 +97,7 @@ export default class App extends React.Component {
                 height='75vh'
               />
               <AnswersList 
-                answers={(answersArray, correct) => this.submitAnswers(answersArray, correct)}
+                playerAnswers={(answersArray, correct) => this.submitAnswers(answersArray, correct)}
               />
             </div>
           </div>
@@ -146,76 +115,43 @@ export default class App extends React.Component {
               <GuessesList 
                 sendGuesses={(guesses) => this.seeResults(guesses)}
                 players={players}
-                answers={answers}
+                playerAnswers={playerAnswers}
               />  
             </div>
-              {/* <p>{players[playerIndex]}</p>
-              <Form>
-                <Form.Field>
-                  <Checkbox 
-                    label={answers[0]} 
-                    name='guessGroup'
-                    checked={selectedAnswer === 0}
-                    value={0}
-                    onChange={(e, { value }) => this.playerGuess(value)}
-                  />
-                </Form.Field>
-                <Form.Field>  
-                  <Checkbox  
-                    label={answers[1]} 
-                    name='guessGroup'
-                    checked={selectedAnswer === 1}
-                    value={1}
-                    onChange={(e, { value }) => this.playerGuess(value)}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <Checkbox 
-                    label={answers[2]} 
-                    name='guessGroup'
-                    checked={selectedAnswer === 2}
-                    value={2}
-                    onChange={(e, { value }) => this.playerGuess(value)}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <Checkbox 
-                    label={answers[3]} 
-                    name='guessGroup'
-                    checked={selectedAnswer === 3}
-                    value={3}
-                    onChange={(e, { value }) => this.playerGuess(value)}
-                  />
-                </Form.Field>
-              </Form> */}
-            {/* {playerIndex !== players.length - 1 ? <Button onClick={() => this.submitGuess()}>Submit</Button> : <Button onClick={() => this.seeResults()}>Submit and See Results</Button>} */}
           </div>
         )
       case 'results':
-        let correctIndex = answers.indexOf(correctAnswer)
-        let correctPlayers = []
+        let { guesses, correctAnswer, answers } = this.state
+        // let correctIndex = answers.indexOf(correctAnswer)
+        // let correctPlayers = []
         
-        for (let [playerName, guessIndex] of Object.entries(guesses)) {
-          if (guessIndex === correctIndex) {
-            correctPlayers.push(playerName)
-          }
-        }
+        // for (let [playerName, guessIndex] of Object.entries(guesses)) {
+        //   if (guessIndex === correctIndex) {
+        //     correctPlayers.push(playerName)
+        //   }
+        // }
 
         return (
-          <div>
-            <h2>results</h2>
-            <DrawnImage
-              className="drawnImage"
-              drawing={drawingURL}
-              width='768px' 
-              height='576px'
-            />
-            <div>
+          <div className='results_container'>
+            <div className='results_main'>
+              <DrawnImage
+                className="drawnImage"
+                drawing={drawingURL}
+                width='768px' 
+                height='576px'
+              />
+              <Results 
+                guesses={guesses}
+                correctAnswer={correctAnswer}
+                playerAnswers={playerAnswers}
+              />
+            </div>
+            {/* <div>
               <p>The correct answer is: {correctAnswer}</p>
             </div>
             <div>
               Players who got it correct: {correctPlayers}
-            </div>
+            </div> */}
           </div>
         )
       default:

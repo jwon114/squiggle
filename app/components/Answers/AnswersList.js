@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Form, Header, Message } from 'semantic-ui-react'
 import './AnswersList.scss'
+import _ from 'lodash'
 
 export default class AnswersList extends React.Component {
   
@@ -52,8 +53,8 @@ export default class AnswersList extends React.Component {
     if (!this.checkAnswers()) {
       this.setState({ error: 'Cannot have duplicate answers' })
     } else {
-      let answers = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
-      this.props.answers(answers, correctAnswer)
+      let answersArray = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
+      this.props.playerAnswers(_.shuffle(answersArray), correctAnswer)
     }
   }
 
