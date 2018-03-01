@@ -1,5 +1,4 @@
 import React from 'react'
-// import PasswordInput from './PasswordInput'
 import PlayerSelection from './Players/PlayerSelection'
 import DrawingCanvas from './Canvas/DrawingCanvas'
 import DrawnImage from './DrawnImage/DrawnImage'
@@ -121,16 +120,6 @@ export default class App extends React.Component {
           </div>
         )
       case 'results':
-        let { guesses, correctAnswer, answers } = this.state
-        // let correctIndex = answers.indexOf(correctAnswer)
-        // let correctPlayers = []
-        
-        // for (let [playerName, guessIndex] of Object.entries(guesses)) {
-        //   if (guessIndex === correctIndex) {
-        //     correctPlayers.push(playerName)
-        //   }
-        // }
-
         return (
           <div className='results_container'>
             <div className='results_main'>
@@ -146,12 +135,6 @@ export default class App extends React.Component {
                 playerAnswers={playerAnswers}
               />
             </div>
-            {/* <div>
-              <p>The correct answer is: {correctAnswer}</p>
-            </div>
-            <div>
-              Players who got it correct: {correctPlayers}
-            </div> */}
           </div>
         )
       default:

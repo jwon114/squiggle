@@ -107,6 +107,10 @@ export default class PlayerSelection extends React.Component {
     }
   }
 
+  buildCardView() {
+    
+  }
+
   renderView() {
     let { playerCount, playerNames, player1Name, player2Name, player3Name, player4Name } = this.state
     switch(playerCount) {
