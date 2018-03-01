@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Checkbox, Header, Button, Message } from 'semantic-ui-react'
+import { Form, Checkbox, Header, Button, Message, Label, Step } from 'semantic-ui-react'
 import './GuessesList.scss'
 
 export default class GuessesList extends React.Component {
@@ -8,8 +8,18 @@ export default class GuessesList extends React.Component {
     super(props)
     this.state = {
       selectedAnswer: '',
-      playerIndex: 1
+      playerIndex: 0,
+      players: [],
+      guesses: {}
     }
+  }
+
+  componentDidMount() {
+    let { players } = this.props
+    players.shift()
+    this.setState({
+      players: players
+    })
   }
 
   submitGuess() {
@@ -26,10 +36,17 @@ export default class GuessesList extends React.Component {
   render() {
     let { players, answers } = this.props
     let { playerIndex, selectedAnswer } = this.state
+    let submitMessage
+    playerIndex !== players.length - 1 ? submitMessage = 'Submit' : submitMessage = 'Submit & See Results'
     return (
       <div className='guessesList__container'>
         <Header textAlign='center' size='large'>Guess the Drawing</Header>
-        <p>{players[playerIndex]}</p>
+        <span>Player Turn</span>
+        <Step.Group size='mini'>
+          {players.map((player, id) => (
+            <Step active={player === players[playerIndex]} key={id}>{player}</Step>
+          ))}
+        </Step.Group>
         <div className='guessesList__main_container'>
           <Message>What do you think this drawing is?</Message>
           <Form>
@@ -70,7 +87,7 @@ export default class GuessesList extends React.Component {
               />
             </Form.Field>
           </Form>
-          {playerIndex !== players.length - 1 ? <Button onClick={() => this.submitGuess()}>Submit</Button> : <Button onClick={() => this.seeResults()}>Submit and See Results</Button>}
+          <Button onClick={() => this.submitGuess()}>{submitMessage}</Button>
         </div>
       </div>
     )
