@@ -21,8 +21,8 @@
   padding: 10px;
 }
 
-.drawingCanvas__tools > .ui.label {
-  margin-bottom: 20px;
+.drawingCanvas__tools > .ui.label, .drawingCanvas__colors > .ui.label, .drawingCanvas__line_width > .ui.label {
+  margin-bottom: 10px;
 }
 
 .drawingCanvas__tools_buttonGroup {
@@ -38,22 +38,14 @@
   padding: 10px;
 }
 
-.drawingCanvas__colors > .ui.label {
-  margin-bottom: 20px;
-}
-
-.drawingCanvas__colors > .ui.black.button {
-  margin-top: 20px;
+.drawingCanvas__colors > .ui.black.button, .drawingCanvas__undo_eraser {
+  margin-top: 10px;
 }
 
 .drawingCanvas__line_width {
   text-align: center;
   border: 2px solid black;
   padding: 10px;
-}
-
-.drawingCanvas__line_width > .ui.label {
-  margin-bottom: 20px;
 }
 
 .drawingCanvas__line_width > .ui.label.pointing {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { SketchField, Tools } from 'react-sketch'
-import { Dropdown, Button, Label } from 'semantic-ui-react'
+import { Dropdown, Button, Label, Icon } from 'semantic-ui-react'
 import { CompactPicker, CirclePicker } from 'react-color'
 import { Slider } from 'react-semantic-ui-range'
 import './DrawingCanvas.scss'
@@ -13,7 +13,9 @@ export default class DrawingCanvas extends React.Component {
       backgroundColor: 'transparent',
       tool: Tools.Pencil,
       lineColor: '#000000',
-      lineWidth: 3
+      lineWidth: 3,
+      canUndo: false,
+      canRedo: false
     }
   }
 
@@ -21,8 +23,32 @@ export default class DrawingCanvas extends React.Component {
     this.props.sketchRef(this.sketch.toDataURL())
   }
 
+  onSketchChange() {
+    let prev = this.state.canUndo;
+    let now = this.sketch.canUndo();
+    if (prev !== now) {
+      this.setState({ canUndo: now });
+    }
+  }
+
+  undo() {
+    this.sketch.undo();
+    this.setState({
+      canUndo: this.sketch.canUndo(),
+      canRedo: this.sketch.canRedo()
+    })
+  }
+
+  redo() {
+    this.sketch.redo();
+    this.setState({
+      canUndo: this.sketch.canUndo(),
+      canRedo: this.sketch.canRedo()
+    })
+  }
+
   render() {
-    const { backgroundColor, tool, lineColor, lineWidth } = this.state
+    const { backgroundColor, tool, lineColor, lineWidth, canUndo, canRedo } = this.state
     const colorOptions = [
       {
         text: 'Black',
@@ -55,14 +81,13 @@ export default class DrawingCanvas extends React.Component {
             <SketchField
               className='drawingCanvas__sketchField'
               ref={c => this.sketch = c} 
-              // width='768px' 
               width='75vw'
-              // height='576px'
               height='75vh' 
               tool={tool}
               backgroundColor={backgroundColor}
               lineColor={lineColor}
               lineWidth={lineWidth}
+              onChange={() => this.onSketchChange()}
             />
           </div>
           <div className='drawingCanvas__toolkit'>
@@ -97,10 +122,38 @@ export default class DrawingCanvas extends React.Component {
                 color={lineColor}
                 onChange={color => this.setState({ lineColor: color.hex })}
               />
+              <div className='drawingCanvas__undo_eraser'>
+                <Button
+                  compact
+                  size='small'
+                  disabled={!canUndo}
+                  onClick={() => this.undo()}>
+                  <Icon
+                    size='big'
+                    name='undo'>
+                  </Icon>
+                </Button>
+                <Button
+                  compact
+                  size='small'
+                  disabled={!canRedo}
+                  onClick={() => this.redo()}>
+                  <Icon
+                    size='big'
+                    name='undo'
+                    flipped='horizontally'>
+                  </Icon>
+                </Button>
+                <Button
+                  color='grey'
+                  onClick={() => this.setState({ lineColor: '#FFFFFF' })}>
+                  Eraser
+                </Button>
+              </div>
               <Button 
                 color='black'
                 onClick={() => this.setState({ lineColor: '#000000' })}>
-                Set to Default Color
+                Set to Default Colour
               </Button>
             </div>
             <div className='drawingCanvas__line_width'>
