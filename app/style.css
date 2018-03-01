@@ -6,3 +6,10 @@ body {
  width: 90%;
  margin: 0 auto; 
 }
+
+.answers_main {
+  display: flex;
+  width: 98%;
+  margin: 0 auto;
+  height: 75vh;
+}

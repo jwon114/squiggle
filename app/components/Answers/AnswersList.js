@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Header } from 'semantic-ui-react'
 import './AnswersList.scss'
 
 export default class AnswersList extends React.Component {
@@ -50,28 +50,32 @@ export default class AnswersList extends React.Component {
     let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
     return (
       <div className='answersList__container'>
-          <h2>Create some answers</h2>
+          <Header size='huge'>Create Answers</Header>
           <div className='answersList__answers_container'>
             <Form>
               <Form.Group>
                 <Form.Input
-                  className='answersList__correct_answer' 
+                  className='answersList__correct_answer'
+                  size='large' 
                   label='Correct Answer'
                   value={correctAnswer}
                   onChange={(e, { value }) => this.updateAnswers(value, 'correct')}
                 />
                 <Form.Input 
                   label='Fake Answer 1'
+                  size='large'
                   value={fakeAnswer1}
                   onChange={(e, { value }) => this.updateAnswers(value, 'fake1')}
                 />
                 <Form.Input 
                   label='Fake Answer 2'
+                  size='large'
                   value={fakeAnswer2}
                   onChange={(e, { value }) => this.updateAnswers(value, 'fake2')}
                 />
                 <Form.Input 
                   label='Fake Answer 3'
+                  size='large'
                   value={fakeAnswer3}
                   onChange={(e, { value }) => this.updateAnswers(value, 'fake3')}
                 />

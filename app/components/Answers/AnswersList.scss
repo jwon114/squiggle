@@ -1,8 +1,33 @@
-.answersList__answers_container {
+
+.answersList__container {
+  width: 25vw;
+  margin-left: 15px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.answersList__answers_container {
+  height: 100%;
+}
+
+.answersList__answers_container > form {
+  height: 100%;
+}
+
+.answersList__answers_container > form > .fields {
+  display: flex;
+  flex-direction: column !important;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.answersList__answers_container > form > .fields label {
+  font-size: 1.5em !important;
 }
 
 .answersList__correct_answer > label {
-  color: green;
+  color: green !important;
 }

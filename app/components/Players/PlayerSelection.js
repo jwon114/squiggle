@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Input, Message } from 'semantic-ui-react'
+import { Button, Card, Input, Message, Header } from 'semantic-ui-react'
 import _ from 'lodash'
 import './PlayerSelection.scss'
 
@@ -98,6 +98,7 @@ export default class PlayerSelection extends React.Component {
           playersArray = [player1Name, player2Name, player3Name, player4Name]
           break
       }
+      this.setState({ error: '' })
       this.props.updateNames(_.shuffle(playersArray))
     }
   }
@@ -255,7 +256,7 @@ export default class PlayerSelection extends React.Component {
     return (
       <div className='playerSelection__container'>
         <div className='playerSelection__number_container'>
-          <h2>How many players?</h2>
+          <Header size='huge'>How Many Players?</Header>
           <Button.Group>
             <Button
               toggle

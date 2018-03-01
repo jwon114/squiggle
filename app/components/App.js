@@ -4,7 +4,9 @@ import PlayerSelection from './Players/PlayerSelection'
 import AnswersList from './Answers/AnswersList'
 import DrawnImage from './DrawnImage/DrawnImage'
 import DrawingCanvas from './Canvas/DrawingCanvas'
-import { Form, Checkbox, Button } from 'semantic-ui-react'
+import SquiggleLogoSmall from '../../public/squiggle_logo_small.png'
+import SquiggleLogoFull from '../../public/squiggle_logo_full.png'
+import { Form, Checkbox, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
 
 export default class App extends React.Component {
@@ -17,9 +19,6 @@ export default class App extends React.Component {
       drawingURL: '',
       players: [],
       correctAnswer: '',
-      // fakeAnswer1: '',
-      // fakeAnswer2: '',
-      // fakeAnswer3: '',
       answers: [],
       playerIndex: 1,
       selectedAnswer: '',
@@ -45,7 +44,10 @@ export default class App extends React.Component {
     let { view, viewsList } = this.state
     let viewIndex = viewsList.indexOf(view)
     let newView = viewsList[viewIndex - 1]
-    this.setState({ view: newView })
+    this.setState({ 
+      view: newView,
+      players: []
+    })
   }
 
   updateAnswers(value, type) {
@@ -66,8 +68,6 @@ export default class App extends React.Component {
   }
 
   submitAnswers(answersArray, correct) {
-    // let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3 } = this.state
-    // let answersArray = [correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3]
     this.setState({ 
       view: 'guesses',
       answers: _.shuffle(answersArray),
@@ -113,9 +113,6 @@ export default class App extends React.Component {
       case 'draw':
         return (
         <div className='draw_container'>
-          <div>
-            {players.map((player, index) => <p key={index}>{player}</p> )}
-          </div>
           <DrawingCanvas 
             sketchRef={(value) => this.saveDrawing(value)}
           />
@@ -125,31 +122,19 @@ export default class App extends React.Component {
       case 'answers':
         return (
           <div className='answers_container'>
-            <div>
-              {players.map((player, index) => <p key={index}>{player}</p> )}
+            <div className='answers_main'>
+              <DrawnImage
+                className="drawnImage"
+                drawing={drawingURL}
+                // width='768px' 
+                width='75vw'
+                // height='576px'
+                height='75vh'
+              />
+              <AnswersList 
+                answers={(answersArray, correct) => this.submitAnswers(answersArray, correct)}
+              />
             </div>
-            <DrawnImage
-              className="drawnImage"
-              drawing={drawingURL}
-              // width='768px' 
-              width='75vw'
-              // height='576px'
-              height='75vh'
-            />
-            <AnswersList 
-              answers={(answersArray, correct) => this.submitAnswers(answersArray, correct)}
-            />
-            {/* <div>
-              <label>Correct Answer</label>
-              <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'correct')}/>
-              <label>Fake Answer</label>
-              <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'fake1')}/>
-              <label>Fake Answer</label>
-              <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'fake2')}/>
-              <label>Fake Answer</label>
-              <input type="text" onChange={(e) => this.updateAnswers(e.target.value, 'fake3')}/>
-            </div>
-            <Button onClick={() => this.submitAnswers()}>Submit Answers</Button> */}
           </div>
         )
       case 'guesses':
@@ -239,9 +224,11 @@ export default class App extends React.Component {
   }
 
   render() {
+    let { players } = this.state
     return (
       <div>
-        <h1>squiggle</h1>
+        <Image src={SquiggleLogoFull} />
+        {players.length !== 0 ? players : ''}
         {this.renderView()}
       </div>
     )
