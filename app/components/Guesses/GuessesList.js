@@ -32,17 +32,20 @@ export default class GuessesList extends React.Component {
       selectedAnswer: ''
     })
   }
+
+  finalGuesses() {
+    this.submitGuess()
+    this.props.sendGuesses(this.state.guesses)
+  }
   
   render() {
     let { players, answers } = this.props
     let { playerIndex, selectedAnswer } = this.state
-    let submitMessage
-    playerIndex !== players.length - 1 ? submitMessage = 'Submit' : submitMessage = 'Submit & See Results'
     return (
       <div className='guessesList__container'>
         <Header textAlign='center' size='large'>Guess the Drawing</Header>
         <span>Player Turn</span>
-        <Step.Group size='mini'>
+        <Step.Group size='large'>
           {players.map((player, id) => (
             <Step active={player === players[playerIndex]} key={id}>{player}</Step>
           ))}
@@ -87,7 +90,7 @@ export default class GuessesList extends React.Component {
               />
             </Form.Field>
           </Form>
-          <Button onClick={() => this.submitGuess()}>{submitMessage}</Button>
+          {playerIndex !== players.length - 1 ? <Button onClick={() => this.submitGuess()}>Submit</Button> : <Button onClick={() => this.finalGuesses()}>Submit and See Results</Button>}
         </div>
       </div>
     )

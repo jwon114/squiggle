@@ -89,13 +89,7 @@ export default class App extends React.Component {
   //   })
   // }
 
-  submitGuesses() {
-
-  }
-
-  seeResults() {
-    let { guesses, playerIndex, selectedAnswer, players } = this.state
-    guesses[players[playerIndex]] = selectedAnswer
+  seeResults(guesses) {
     this.setState({
       guesses: guesses,
       view: 'results'
@@ -150,7 +144,7 @@ export default class App extends React.Component {
                 height='75vh'
               />
               <GuessesList 
-                sendGuesses={(guesses) => this.submitGuesses(guesses)}
+                sendGuesses={(guesses) => this.seeResults(guesses)}
                 players={players}
                 answers={answers}
               />  
