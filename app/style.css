@@ -10,7 +10,7 @@ body {
   display: flex;
   justify-content: space-between;
   width: 98%;
-  margin-top: 1%;
+  padding-top: 1%;
 }
 
 .players_container {

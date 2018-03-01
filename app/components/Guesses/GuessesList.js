@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Checkbox, Header, Button, Message, Label, Step } from 'semantic-ui-react'
 import './GuessesList.scss'
+import _ from 'lodash'
 
 export default class GuessesList extends React.Component {
 
@@ -17,9 +18,9 @@ export default class GuessesList extends React.Component {
 
   componentDidMount() {
     let { players, playerAnswers } = this.props
-    players.shift()
+    let shiftedPlayers = _.slice(players, 0, 1)
     this.setState({
-      players: players,
+      players: shiftedPlayers,
       playerAnswers: playerAnswers
     })
   }
