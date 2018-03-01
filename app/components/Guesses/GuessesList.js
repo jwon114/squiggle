@@ -18,9 +18,9 @@ export default class GuessesList extends React.Component {
 
   componentDidMount() {
     let { players, playerAnswers } = this.props
-    let shiftedPlayers = _.slice(players, 0, 1)
+    let slicedPlayers = _.slice(players, 1, players.length)
     this.setState({
-      players: shiftedPlayers,
+      players: slicedPlayers,
       playerAnswers: playerAnswers
     })
   }
