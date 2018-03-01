@@ -107,8 +107,32 @@ export default class PlayerSelection extends React.Component {
     }
   }
 
-  buildCardView() {
-    
+  // store player and image in an object + have an array to maintain the player order
+
+  buildCardView(playerCount) {
+    const { player1Name, player2Name, player3Name, player4Name } = this.state
+    let imageArray = [P1Image, P2Image, P3Image, P4Image]
+    let playerNamesArray = [player1Name, player2Name, player3Name, player4Name]
+    return (
+      playerCount.map((player, index) => (
+        <Card raised>
+          <Card.Content>
+            <Card.Header textAlign='center'>
+              {'Player ' + index + 1}
+            </Card.Header>
+            <Image className='playerSelection__player_image' src={imageArray[index]} />
+            <Card.Description>
+              <Input 
+                fluid
+                placeholder='Name'
+                onChange={(e, { value }) => this.updatePlayerName(value, index + 1)}
+                value={playerNamesArray[index]}
+              />
+            </Card.Description>
+          </Card.Content>
+        </Card>
+      ))
+    )
   }
 
   renderView() {
