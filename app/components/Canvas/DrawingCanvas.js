@@ -22,7 +22,7 @@ export default class DrawingCanvas extends React.Component {
   }
 
   render() {
-    let { backgroundColor, tool, lineColor, lineWidth } = this.state
+    const { backgroundColor, tool, lineColor, lineWidth } = this.state
     const colorOptions = [
       {
         text: 'Black',
@@ -113,7 +113,9 @@ export default class DrawingCanvas extends React.Component {
             </div>
           </div>
         </div>
-        <Button size='large' onClick={() => this.updateSketch()}>Submit Drawing</Button>
+        <div className='drawingCanvas__submit_button_container'>
+          <Button size='huge' onClick={() => this.updateSketch()}>Submit Drawing</Button>
+        </div>
       </div>
     )
   }

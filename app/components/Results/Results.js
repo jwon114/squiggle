@@ -8,10 +8,14 @@ export default function Results(props) {
   let correctPlayers = []
   
   for (let [playerName, guessIndex] of Object.entries(guesses)) {
+    console.log(guesses)
+    console.log(playerName)
     if (guessIndex === correctIndex) {
       correctPlayers.push(playerName)
     }
   }
+
+  console.log(correctPlayers)
   
   return (
     <div className='results__container'>

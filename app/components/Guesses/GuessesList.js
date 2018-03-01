@@ -10,25 +10,24 @@ export default class GuessesList extends React.Component {
     this.state = {
       selectedAnswer: '',
       playerIndex: 0,
-      players: [],
+      slicedPlayers: [],
       guesses: {},
       playerAnswers: []
     }
   }
 
   componentDidMount() {
-    let { players, playerAnswers } = this.props
+    const { players, playerAnswers } = this.props
     let slicedPlayers = _.slice(players, 1, players.length)
     this.setState({
-      players: slicedPlayers,
+      slicedPlayers: slicedPlayers,
       playerAnswers: playerAnswers
     })
   }
 
   submitGuess() {
-    let { guesses, playerIndex, selectedAnswer } = this.state
-    let { players } = this.props
-    guesses[players[playerIndex]] = selectedAnswer
+    const { guesses, playerIndex, selectedAnswer, slicedPlayers } = this.state
+    guesses[slicedPlayers[playerIndex]] = selectedAnswer
     this.setState({
       guesses: guesses,
       playerIndex: playerIndex + 1,
@@ -42,14 +41,14 @@ export default class GuessesList extends React.Component {
   }
   
   render() {
-    let { playerIndex, selectedAnswer, players, playerAnswers } = this.state
+    const { playerIndex, selectedAnswer, slicedPlayers, playerAnswers } = this.state
     return (
       <div className='guessesList__container'>
         <Header textAlign='center' size='large'>Guess the Drawing</Header>
         <span>Player Turn</span>
         <Step.Group size='large'>
-          {players.map((player, id) => (
-            <Step active={player === players[playerIndex]} key={id}>{player}</Step>
+          {slicedPlayers.map((player, id) => (
+            <Step active={player === slicedPlayers[playerIndex]} key={id}>{player}</Step>
           ))}
         </Step.Group>
         <div className='guessesList__main_container'>
@@ -92,7 +91,7 @@ export default class GuessesList extends React.Component {
               />
             </Form.Field>
           </Form>
-          {playerIndex !== players.length - 1 ? <Button size='huge' onClick={() => this.submitGuess()}>Submit</Button> : <Button size='huge' onClick={() => this.finalGuesses()}>Submit and See Results</Button>}
+          {playerIndex !== slicedPlayers.length - 1 ? <Button size='huge' onClick={() => this.submitGuess()}>Submit</Button> : <Button size='huge' onClick={() => this.finalGuesses()}>Submit and See Results</Button>}
         </div>
       </div>
     )

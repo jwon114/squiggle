@@ -59,7 +59,7 @@ export default class AnswersList extends React.Component {
   }
 
   render() {
-    let { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, error } = this.state
+    const { correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, error } = this.state
     return (
       <div className='answersList__container'>
           <Header textAlign='center' size='huge'>Create Your Answers</Header>

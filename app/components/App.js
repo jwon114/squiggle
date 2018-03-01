@@ -66,7 +66,7 @@ export default class App extends React.Component {
   }
 
   renderView() {
-    let { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses } = this.state
+    const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses } = this.state
 
     switch(view) {
       case 'players':
@@ -83,7 +83,9 @@ export default class App extends React.Component {
           <DrawingCanvas 
             sketchRef={(value) => this.saveDrawing(value)}
           />
-          <Button onClick={() => this.goBack()}>Go Back</Button>
+          <div className='draw_container_back_button'>
+            <Button size='large' onClick={() => this.goBack()}>Go Back</Button>
+          </div>
         </div>
         )
       case 'answers':

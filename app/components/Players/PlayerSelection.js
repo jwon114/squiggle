@@ -61,7 +61,7 @@ export default class PlayerSelection extends React.Component {
   }
 
   validateNameInput() {
-    let { playerCount, player1Name, player2Name, player3Name, player4Name } = this.state
+    const { playerCount, player1Name, player2Name, player3Name, player4Name } = this.state
     switch(playerCount) {
       case 2:
         if (player1Name !== '' && player2Name !== '') { 
@@ -80,13 +80,13 @@ export default class PlayerSelection extends React.Component {
   }
 
   checkNames() {
-    let { player1Name, player2Name, player3Name, player4Name } = this.state 
+    const { player1Name, player2Name, player3Name, player4Name } = this.state 
     let namesArray = [player1Name, player2Name, player3Name, player4Name]
     return _.compact(namesArray).length === _(namesArray).compact().uniq().value().length
   }
 
   submitNames() {
-    let { playerCount, player1Name, player2Name, player3Name, player4Name } = this.state 
+    const { playerCount, player1Name, player2Name, player3Name, player4Name } = this.state 
     let playersArray = []
     if (!this.checkNames()) {
       this.setState({ error: 'Cannot have duplicate player names' })
@@ -112,7 +112,7 @@ export default class PlayerSelection extends React.Component {
   }
 
   renderView() {
-    let { playerCount, playerNames, player1Name, player2Name, player3Name, player4Name } = this.state
+    const { playerCount, playerNames, player1Name, player2Name, player3Name, player4Name } = this.state
     switch(playerCount) {
       case 2:
         return (    

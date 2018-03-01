@@ -2,6 +2,10 @@ body {
   /* background-color: mistyrose; */
 }
 
+.draw_container_back_button {
+  margin-left: 10px;
+} 
+
 .ui.active.label {
   background-color: gold !important;
 }
