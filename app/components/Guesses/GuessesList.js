@@ -17,8 +17,8 @@ export default class GuessesList extends React.Component {
   }
 
   componentDidMount() {
-    const { players, playerAnswers } = this.props
-    let slicedPlayers = _.slice(players, 1, players.length)
+    const { players, playerAnswers, playerTurnIndex } = this.props
+    let slicedPlayers = _.slice(players, 0, playerTurnIndex).concat(_.slice(players, playerTurnIndex + 1, players.length))
     this.setState({
       slicedPlayers: slicedPlayers,
       playerAnswers: playerAnswers

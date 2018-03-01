@@ -69,17 +69,16 @@ export default class App extends React.Component {
   }
 
   startNextRound() {
-    let { players, round } = this.state
-    players.push(players.shift())
+    let { round, playerTurnIndex } = this.state
     this.setState({
       view: 'draw',
       round: round + 1,
-      players: players
+      playerTurnIndex: playerTurnIndex + 1
     })
   }
 
   renderView() {
-    const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses, round } = this.state
+    const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses, round, playerTurnIndex } = this.state
 
     switch(view) {
       case 'players':
@@ -131,6 +130,7 @@ export default class App extends React.Component {
                 sendGuesses={(guesses) => this.seeResults(guesses)}
                 players={players}
                 playerAnswers={playerAnswers}
+                playerTurnIndex={playerTurnIndex}
               />  
             </div>
           </div>
