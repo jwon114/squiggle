@@ -88,37 +88,45 @@ export default class PlayerSelection extends React.Component {
   submitNames() {
     const { playerCount, player1Name, player2Name, player3Name, player4Name } = this.state 
     let playersArray = []
+    let playerImages = {}
     if (!this.checkNames()) {
       this.setState({ error: 'Cannot have duplicate player names' })
     } else {
       switch(playerCount) {
         case 2:
           playersArray = [player1Name, player2Name]
+          playerImages[player1Name] = P1Image
+          playerImages[player2Name] = P2Image
           break
         case 3:
           playersArray = [player1Name, player2Name, player3Name]
+          playerImages[player1Name] = P1Image
+          playerImages[player2Name] = P2Image
+          playerImages[player3Name] = P3Image
           break
         case 4:
           playersArray = [player1Name, player2Name, player3Name, player4Name]
+          playerImages[player1Name] = P1Image
+          playerImages[player2Name] = P2Image
+          playerImages[player3Name] = P3Image
+          playerImages[player4Name] = P4Image
           break
       }
       this.setState({ error: '' })
-      this.props.updateNames(_.shuffle(playersArray))
+      this.props.updateNames(_.shuffle(playersArray), playerImages)
     }
   }
-
-  // store player and image in an object + have an array to maintain the player order
 
   buildCardView(playerCount) {
     const { player1Name, player2Name, player3Name, player4Name } = this.state
     let imageArray = [P1Image, P2Image, P3Image, P4Image]
     let playerNamesArray = [player1Name, player2Name, player3Name, player4Name]
     return (
-      playerCount.map((player, index) => (
-        <Card raised>
+      _.range(playerCount).map((player, index) => (
+        <Card raised key={index}>
           <Card.Content>
             <Card.Header textAlign='center'>
-              {'Player ' + index + 1}
+              {`Player ${index + 1}`}
             </Card.Header>
             <Image className='playerSelection__player_image' src={imageArray[index]} />
             <Card.Description>
@@ -141,160 +149,19 @@ export default class PlayerSelection extends React.Component {
       case 2:
         return (    
           <div className='playerSelection__card_wrapper'>
-              <Card raised>
-                <Card.Content>
-                  <Card.Header textAlign='center'>
-                    Player 1
-                  </Card.Header>
-                  <Image className='playerSelection__player_image' src={P1Image} />
-                  <Card.Description>
-                    <Input 
-                      fluid
-                      placeholder='Name'
-                      onChange={(e, { value }) => this.updatePlayerName(value, 1)}
-                      value={player1Name}
-                    />
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-              <Card raised>
-                <Card.Content>
-                  <Card.Header textAlign='center'>
-                    Player 2
-                  </Card.Header>
-                  <Image className='playerSelection__player_image' src={P2Image} />
-                  <Card.Description>
-                    <Input 
-                      fluid
-                      placeholder='Name'
-                      onChange={(e, { value }) => this.updatePlayerName(value, 2)}
-                      value={player2Name}
-                    />
-                  </Card.Description>
-                </Card.Content>
-              </Card>
+            {this.buildCardView(2)}
           </div>    
         )
       case 3:
         return (    
           <div className='playerSelection__card_wrapper'>
-              <Card raised>
-                <Card.Content>
-                  <Card.Header textAlign='center'>
-                    Player 1
-                  </Card.Header>
-                  <Image className='playerSelection__player_image' src={P1Image} />
-                  <Card.Description>
-                    <Input
-                      fluid 
-                      placeholder='Name'
-                      onChange={(e, { value }) => this.updatePlayerName(value, 1)}
-                      value={player1Name}
-                    />
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-              <Card raised>
-                <Card.Content>
-                  <Card.Header textAlign='center'>
-                    Player 2
-                  </Card.Header>
-                  <Image className='playerSelection__player_image' src={P2Image} />
-                  <Card.Description>
-                    <Input
-                      fluid 
-                      placeholder='Name'
-                      onChange={(e, { value }) => this.updatePlayerName(value, 2)}
-                      value={player2Name}
-                    />
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-              <Card raised>
-                <Card.Content>
-                  <Card.Header textAlign='center'>
-                    Player 3
-                  </Card.Header>
-                  <Image className='playerSelection__player_image' src={P3Image} />
-                  <Card.Description>
-                    <Input
-                      fluid 
-                      placeholder='Name'
-                      onChange={(e, { value }) => this.updatePlayerName(value, 3)}
-                      value={player3Name}
-                    />
-                  </Card.Description>
-                </Card.Content>
-              </Card>
+            {this.buildCardView(3)}
           </div>    
         )
       case 4:
         return (    
           <div className='playerSelection__card_wrapper'>
-              <Card raised>
-                <Card.Content>
-                  <Card.Header textAlign='center'>
-                    Player 1
-                  </Card.Header>
-                  <Image className='playerSelection__player_image' src={P1Image} />
-                  <Card.Description>
-                    <Input
-                      fluid 
-                      placeholder='Name'
-                      onChange={(e, { value }) => this.updatePlayerName(value, 1)}
-                      value={player1Name}
-                    />
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-              <Card raised>
-                <Card.Content>
-                  <Card.Header textAlign='center'>
-                    Player 2
-                  </Card.Header>
-                  <Image className='playerSelection__player_image' src={P2Image} />
-                  <Card.Description>
-                    <Input
-                      fluid 
-                      placeholder='Name'
-                      onChange={(e, { value }) => this.updatePlayerName(value, 2)}
-                      value={player2Name}
-                    />
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-              <Card raised>
-                <Card.Content>
-                  <Card.Header textAlign='center'>
-                    Player 3
-                  </Card.Header>
-                  <Image className='playerSelection__player_image' src={P3Image} />
-                  <Card.Description>
-                    <Input
-                      fluid 
-                      placeholder='Name'
-                      onChange={(e, { value }) => this.updatePlayerName(value, 3)}
-                      value={player3Name}
-                    />
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-              <Card raised>
-                <Card.Content>
-                  <Card.Header textAlign='center'>
-                    Player 4
-                  </Card.Header>
-                  <Image className='playerSelection__player_image' src={P4Image} />
-                  <Card.Description>
-                    <Input
-                      fluid 
-                      placeholder='Name'
-                      onChange={(e, { value }) => this.updatePlayerName(value, 4)}
-                      value={player4Name}
-                    />
-                  </Card.Description>
-                </Card.Content>
-              </Card>
+            {this.buildCardView(4)}
           </div>    
         )
       default:

@@ -19,6 +19,7 @@ export default class App extends React.Component {
       viewsList: ['players', 'draw', 'answers', 'guesses', 'results'],
       drawingURL: '',
       players: [],
+      playerImages: {},
       correctAnswer: '',
       playerAnswers: [],
       playerTurnIndex: 0,
@@ -33,9 +34,10 @@ export default class App extends React.Component {
     })
   }
 
-  letsDraw(names) {
+  letsDraw(names, images) {
     this.setState({
       players: names,
+      playerImages: images,
       view: 'draw'
     })
   }
@@ -73,20 +75,20 @@ export default class App extends React.Component {
         return (
           <div className='players_container'>
             <PlayerSelection 
-              updateNames={(names) => this.letsDraw(names)}
+              updateNames={(names, images) => this.letsDraw(names, images)}
             />
           </div>
         )
       case 'draw':
         return (
-        <div className='draw_container'>
-          <DrawingCanvas 
-            sketchRef={(value) => this.saveDrawing(value)}
-          />
-          <div className='draw_container_back_button'>
-            <Button size='large' onClick={() => this.goBack()}>Go Back</Button>
+          <div className='draw_container'>
+            <DrawingCanvas 
+              sketchRef={(value) => this.saveDrawing(value)}
+            />
+            <div className='draw_container_back_button'>
+              <Button size='large' onClick={() => this.goBack()}>Go Back</Button>
+            </div>
           </div>
-        </div>
         )
       case 'answers':
         return (
@@ -141,17 +143,17 @@ export default class App extends React.Component {
           </div>
         )
       default:
-        
+        return ''
     }
   }
 
   render() {
-    let { players, playerTurnIndex } = this.state
+    let { players, playerTurnIndex, playerImages } = this.state
     return (
       <div>
         <header className='app_header'>
           <Image src={SquiggleLogoFull} />
-          {players.length !== 0 ? <PlayerIcon players={players} playerTurnIndex={playerTurnIndex} /> : ''}
+          {players.length !== 0 ? <PlayerIcon players={players} playerTurnIndex={playerTurnIndex} playerImages={playerImages} /> : ''}
         </header>
         {this.renderView()}
       </div>
