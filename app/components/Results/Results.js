@@ -27,7 +27,7 @@ export default function Results(props) {
         </List.Item>
         {correctPlayers.map((player, index) => <List.Item key={index}>{player}</List.Item>)}
       </List>
-      {players.length !== round ? <Button onClick={() => nextRound()}>Next Round</Button> : ''}
+      {players.length !== round ? <Button size='medium' onClick={() => nextRound()}>Next Round</Button> : ''}
     </div>
   )
 }
