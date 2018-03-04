@@ -167,6 +167,7 @@ export default class DrawingCanvas extends React.Component {
           </div>
         </div>
         <div className='drawingCanvas__submit_button_container'>
+          <Button size='large' onClick={() => this.props.goBack()}>Go Back</Button>
           <Button size='huge' onClick={() => this.updateSketch()}>Submit Drawing</Button>
         </div>
       </div>

@@ -1,0 +1,20 @@
+.playerIcon__name {
+  text-align: center;
+}
+
+.playerIcon__container {
+  display: flex;
+}
+
+.playerIcon__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.playerIcon__image {
+  margin-bottom: 2px !important;
+}
+
+.playerIcon__score {
+  text-align: center;
+}

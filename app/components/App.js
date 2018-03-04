@@ -7,6 +7,7 @@ import AnswersList from './Answers/AnswersList'
 import GuessesList from './Guesses/GuessesList'
 import Results from './Results/Results'
 import SquiggleLogoFull from '../../public/images/squiggle_logo_full.png'
+import SquiggleLogoSmall from '../../public/images/squiggle_logo_small.png'
 import { Form, Checkbox, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
 
@@ -24,7 +25,8 @@ export default class App extends React.Component {
       playerAnswers: [],
       playerTurnIndex: 0,
       guesses: {},
-      round: 1
+      round: 1,
+      playerPoints: {}
     }
   }
 
@@ -36,9 +38,14 @@ export default class App extends React.Component {
   }
 
   letsDraw(names, images) {
+    let playerPoints = {}
+    names.forEach(name => (
+      playerPoints[name] = 0
+    ))
     this.setState({
       players: names,
       playerImages: images,
+      playerPoints: playerPoints,
       view: 'draw'
     })
   }
@@ -94,10 +101,11 @@ export default class App extends React.Component {
           <div className='draw_container'>
             <DrawingCanvas 
               sketchRef={(value) => this.saveDrawing(value)}
+              goBack={() => this.goBack()}
             />
-            <div className='draw_container_back_button'>
+            {/* <div className='draw_container_back_button'>
               <Button size='large' onClick={() => this.goBack()}>Go Back</Button>
-            </div>
+            </div> */}
           </div>
         )
       case 'answers':
@@ -162,12 +170,18 @@ export default class App extends React.Component {
   }
 
   render() {
-    let { players, playerTurnIndex, playerImages } = this.state
+    let { players, playerTurnIndex, playerImages, view, playerPoints } = this.state
     return (
       <div>
         <header className='app_header'>
-          <Image src={SquiggleLogoFull} />
-          {players.length !== 0 ? <PlayerIcon players={players} playerTurnIndex={playerTurnIndex} playerImages={playerImages} /> : ''}
+          {view === 'players' ? <Image src={SquiggleLogoFull} /> : <Image src={SquiggleLogoSmall} />}
+          {players.length !== 0 ? 
+            <PlayerIcon 
+              players={players} 
+              playerTurnIndex={playerTurnIndex} 
+              playerImages={playerImages} 
+              playerPoints={playerPoints} 
+            /> : ''}
         </header>
         {this.renderView()}
       </div>

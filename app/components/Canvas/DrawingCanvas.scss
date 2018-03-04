@@ -58,7 +58,6 @@
 
 .drawingCanvas__submit_button_container {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-  margin-right: 10px;
+  justify-content: space-between;
+  margin: 10px 10px 0 10px;
 }

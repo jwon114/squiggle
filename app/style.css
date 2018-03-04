@@ -2,6 +2,10 @@ body {
   /* background-color: mistyrose; */
 }
 
+.app_header {
+  padding-top: 0 !important;
+}
+
 .draw_container_back_button {
   margin-left: 10px;
 } 
