@@ -103,9 +103,6 @@ export default class App extends React.Component {
               sketchRef={(value) => this.saveDrawing(value)}
               goBack={() => this.goBack()}
             />
-            {/* <div className='draw_container_back_button'>
-              <Button size='large' onClick={() => this.goBack()}>Go Back</Button>
-            </div> */}
           </div>
         )
       case 'answers':
