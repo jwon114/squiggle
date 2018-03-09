@@ -39,4 +39,6 @@ body {
 
 .results_footer {
   margin: 20px 2%;
+  display: flex;
+  justify-content: flex-end;
 }
