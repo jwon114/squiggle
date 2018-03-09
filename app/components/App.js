@@ -39,9 +39,7 @@ export default class App extends React.Component {
 
   letsDraw(names, images) {
     let playerPoints = {}
-    names.forEach(name => (
-      playerPoints[name] = 0
-    ))
+    names.forEach(name => playerPoints[name] = 0)
     this.setState({
       players: names,
       playerImages: images,
@@ -84,6 +82,10 @@ export default class App extends React.Component {
     })
   }
 
+  updatePlayerPoints(points) {
+    console.log(points)
+  }
+
   renderView() {
     const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses, round, playerTurnIndex, playerImages, playerPoints } = this.state
 
@@ -101,6 +103,7 @@ export default class App extends React.Component {
           <div className='draw_container'>
             <DrawingCanvas 
               sketchRef={(value) => this.saveDrawing(value)}
+              round={round}
               goBack={() => this.goBack()}
             />
           </div>
@@ -150,15 +153,14 @@ export default class App extends React.Component {
                 guesses={guesses}
                 correctAnswer={correctAnswer}
                 playerAnswers={playerAnswers}
-                round={round}
                 players={players}
                 playerImages={playerImages}
                 playerPoints={playerPoints}
-                nextRound={() => this.startNextRound()}
+                updatePoints={points => this.updatePlayerPoints(points)}
               />
             </div>
             <div className='results_footer'>
-              {players.length !== round ? <Button size='medium' onClick={() => this.startNextRound()}>Next Round</Button> : ''}
+              {players.length !== round ? <Button size='large' onClick={() => this.startNextRound()}>Next Round</Button> : ''}
             </div>
           </div>
         )
