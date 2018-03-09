@@ -130,7 +130,8 @@ export default class PlayerSelection extends React.Component {
             </Card.Header>
             <Image className='playerSelection__player_image' src={imageArray[index]} />
             <Card.Description>
-              <Input 
+              <Input
+                className='playerSelection__player_name' 
                 fluid
                 placeholder='Name'
                 onChange={(e, { value }) => this.updatePlayerName(value, index + 1)}
@@ -144,29 +145,12 @@ export default class PlayerSelection extends React.Component {
   }
 
   renderView() {
-    const { playerCount, playerNames, player1Name, player2Name, player3Name, player4Name } = this.state
-    switch(playerCount) {
-      case 2:
-        return (    
-          <div className='playerSelection__card_wrapper'>
-            {this.buildCardView(2)}
-          </div>    
-        )
-      case 3:
-        return (    
-          <div className='playerSelection__card_wrapper'>
-            {this.buildCardView(3)}
-          </div>    
-        )
-      case 4:
-        return (    
-          <div className='playerSelection__card_wrapper'>
-            {this.buildCardView(4)}
-          </div>    
-        )
-      default:
-        return ''
-    } 
+    const { playerCount } = this.state
+    return (
+      <div className='playerSelection__card_wrapper'>
+        {this.buildCardView(playerCount)}
+      </div>
+    )
   }
 
   render() {

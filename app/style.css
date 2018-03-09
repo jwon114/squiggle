@@ -26,13 +26,17 @@ body {
   margin: 0 auto; 
 }
 
-.answers_main, .guesses_main {
+.answers_main, .guesses_main, .results_details {
   display: flex;
   width: 98%;
   margin: 0 auto;
   height: 75vh;
 }
 
-.results_main > .drawnImage__image {
-  margin: 0 auto;
+.results_main {
+  
+}
+
+.results_footer {
+  margin: 20px 2%;
 }

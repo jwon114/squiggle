@@ -45,15 +45,15 @@ export default class GuessesList extends React.Component {
     return (
       <div className='guessesList__container'>
         <Header textAlign='center' size='large'>Guess the Drawing</Header>
-        <span>Player Turn</span>
+        <Header>Player Turn</Header>
         <Step.Group size='large'>
           {slicedPlayers.map((player, id) => (
             <Step active={player === slicedPlayers[playerIndex]} key={id}>{player}</Step>
           ))}
         </Step.Group>
         <div className='guessesList__main_container'>
-          <Message>What do you think this drawing is?</Message>
-          <Form>
+          <Message size='large'>What do you think this drawing is?</Message>
+          <Form className='guessesList__guesses_container'>
             <Form.Field>
               <Checkbox 
                 label={playerAnswers[0]} 

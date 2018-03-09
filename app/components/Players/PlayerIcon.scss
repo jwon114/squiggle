@@ -18,3 +18,7 @@
 .playerIcon__score {
   text-align: center;
 }
+
+.playerIcon__score:last-child {
+  margin-right: 0.75em !important;
+}

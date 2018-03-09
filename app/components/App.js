@@ -85,7 +85,7 @@ export default class App extends React.Component {
   }
 
   renderView() {
-    const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses, round, playerTurnIndex } = this.state
+    const { view, drawingURL, players, correctAnswer, fakeAnswer1, fakeAnswer2, fakeAnswer3, selectedAnswer, playerIndex, playerAnswers, guesses, round, playerTurnIndex, playerImages, playerPoints } = this.state
 
     switch(view) {
       case 'players':
@@ -107,43 +107,39 @@ export default class App extends React.Component {
         )
       case 'answers':
         return (
-          <div className='answers_container'>
-            <div className='answers_main'>
-              <DrawnImage
-                className="drawnImage"
-                drawing={drawingURL}
-                width='75vw'
-                height='75vh'
-              />
-              <AnswersList 
-                playerAnswers={(answersArray, correct) => this.submitAnswers(answersArray, correct)}
-              />
-            </div>
+          <div className='answers_main'>
+            <DrawnImage
+              className="drawnImage"
+              drawing={drawingURL}
+              width='75vw'
+              height='75vh'
+            />
+            <AnswersList 
+              playerAnswers={(answersArray, correct) => this.submitAnswers(answersArray, correct)}
+            />
           </div>
         )
       case 'guesses':
         return (
-          <div className='guesses_container'>
-            <div className='guesses_main'>
-              <DrawnImage
-                className="drawnImage"
-                drawing={drawingURL}
-                width='75vw' 
-                height='75vh'
-              />
-              <GuessesList 
-                sendGuesses={(guesses) => this.seeResults(guesses)}
-                players={players}
-                playerAnswers={playerAnswers}
-                playerTurnIndex={playerTurnIndex}
-              />  
-            </div>
+          <div className='guesses_main'>
+            <DrawnImage
+              className="drawnImage"
+              drawing={drawingURL}
+              width='75vw' 
+              height='75vh'
+            />
+            <GuessesList 
+              sendGuesses={(guesses) => this.seeResults(guesses)}
+              players={players}
+              playerAnswers={playerAnswers}
+              playerTurnIndex={playerTurnIndex}
+            />  
           </div>
         )
       case 'results':
         return (
-          <div className='results_container'>
-            <div className='results_main'>
+          <div className='results_main'>
+            <div className='results_details'>
               <DrawnImage
                 className="drawnImage"
                 drawing={drawingURL}
@@ -156,8 +152,13 @@ export default class App extends React.Component {
                 playerAnswers={playerAnswers}
                 round={round}
                 players={players}
+                playerImages={playerImages}
+                playerPoints={playerPoints}
                 nextRound={() => this.startNextRound()}
               />
+            </div>
+            <div className='results_footer'>
+              {players.length !== round ? <Button size='medium' onClick={() => this.startNextRound()}>Next Round</Button> : ''}
             </div>
           </div>
         )

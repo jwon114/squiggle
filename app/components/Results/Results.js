@@ -1,9 +1,10 @@
 import React from 'react'
-import { Header, List, Label, Button } from 'semantic-ui-react'
+import { Header, Label, Image } from 'semantic-ui-react'
+import SquiggleLogoSmall from '../../../public/images/squiggle_logo_small.png'
 import './Results.scss'
 
 export default function Results(props) {
-  let { guesses, correctAnswer, playerAnswers, round, players, nextRound } = props
+  let { guesses, correctAnswer, playerAnswers, players, playerImages, playerPoints } = props
   let correctIndex = playerAnswers.indexOf(correctAnswer)
   let correctPlayers = []
   
@@ -15,19 +16,27 @@ export default function Results(props) {
   
   return (
     <div className='results__container'>
-      <List size='huge' horizontal>
-        <List.Item>
-          <Label size='huge'>The correct answer is: </Label>
-        </List.Item>
-        <List.Item>
+      <Header textAlign='center' size='large'>Results</Header>
+          <Label size='huge'>the correct answer is... </Label>
           <Header>{correctAnswer}</Header>
-        </List.Item>
-        <List.Item>
-          <Label size='huge'>Players who got it correct: </Label>
-        </List.Item>
-        {correctPlayers.map((player, index) => <List.Item key={index}>{player}</List.Item>)}
-      </List>
-      {players.length !== round ? <Button size='medium' onClick={() => nextRound()}>Next Round</Button> : ''}
+          <Label size='huge'>players who got it correct: </Label>
+        <div className='results__playerScores_container'>
+          {correctPlayers.map((player, index) => (
+            <Label.Group key={index} className='results__group'>
+              <Label 
+                className='results__image' 
+                key={index} 
+                size='big'> 
+                <Image size='big' centered src={playerImages[player]} />
+                <div className='results__name'>{player}</div>
+              </Label>
+              <Label 
+                className='results__score'>
+                {playerPoints[player]}
+              </Label>
+            </Label.Group>
+          ))}
+        </div>
     </div>
   )
 }
