@@ -6,9 +6,10 @@ import DrawnImage from './DrawnImage/DrawnImage'
 import AnswersList from './Answers/AnswersList'
 import GuessesList from './Guesses/GuessesList'
 import Results from './Results/Results'
+import Countdown from './Countdown/Countdown'
 import SquiggleLogoFull from '../../public/images/squiggle_logo_full.png'
 import SquiggleLogoSmall from '../../public/images/squiggle_logo_small.png'
-import { Form, Checkbox, Button, Image } from 'semantic-ui-react'
+import { Button, Image, Icon } from 'semantic-ui-react'
 import _ from 'lodash'
 
 export default class App extends React.Component {
@@ -82,8 +83,12 @@ export default class App extends React.Component {
     })
   }
 
-  updatePlayerPoints(points) {
-    console.log(points)
+  countdownComplete() {
+    console.log('countdown completed')
+  }
+
+  showFinalResult() {
+    console.log('show final result')
   }
 
   renderView() {
@@ -102,7 +107,7 @@ export default class App extends React.Component {
         return (
           <div className='draw_container'>
             <DrawingCanvas 
-              sketchRef={(value) => this.saveDrawing(value)}
+              sketchRef={value => this.saveDrawing(value)}
               round={round}
               goBack={() => this.goBack()}
             />
@@ -125,18 +130,26 @@ export default class App extends React.Component {
       case 'guesses':
         return (
           <div className='guesses_main'>
-            <DrawnImage
-              className="drawnImage"
-              drawing={drawingURL}
-              width='75vw' 
-              height='75vh'
-            />
-            <GuessesList 
-              sendGuesses={(guesses) => this.seeResults(guesses)}
-              players={players}
-              playerAnswers={playerAnswers}
-              playerTurnIndex={playerTurnIndex}
-            />  
+            <div className='guesses_details'>
+              <DrawnImage
+                className="drawnImage"
+                drawing={drawingURL}
+                width='75vw' 
+                height='75vh'
+              />
+              <GuessesList 
+                sendGuesses={guesses => this.seeResults(guesses)}
+                players={players}
+                playerAnswers={playerAnswers}
+                playerTurnIndex={playerTurnIndex}
+              />
+            </div>
+            <div className='guesses_footer'>
+              <Countdown 
+                count={30}
+                onComplete={() => this.countdownComplete()}
+              />
+            </div>  
           </div>
         )
       case 'results':
@@ -156,11 +169,24 @@ export default class App extends React.Component {
                 players={players}
                 playerImages={playerImages}
                 playerPoints={playerPoints}
-                updatePoints={points => this.updatePlayerPoints(points)}
               />
             </div>
             <div className='results_footer'>
-              {players.length !== round ? <Button size='large' onClick={() => this.startNextRound()}>Next Round</Button> : ''}
+              {players.length !== round ? 
+                <Button 
+                  animated
+                  size='huge' 
+                  onClick={() => this.startNextRound()}>
+                  <Button.Content visible>Next Round</Button.Content> 
+                  <Button.Content hidden>
+                    <Icon name='right arrow' />
+                  </Button.Content>
+                </Button> : 
+                <Button
+                  size='huge'
+                  onClick={() => this.showFinalResult()}><span>See Final Results </span>
+                </Button>
+              }
             </div>
           </div>
         )
@@ -174,18 +200,22 @@ export default class App extends React.Component {
     return (
       <div>
         <header className='app_header'>
-          {view === 'players' ? <Image src={SquiggleLogoFull} /> : <Image src={SquiggleLogoSmall} />}
+          {view === 'players' ? 
+            <Image src={SquiggleLogoFull} /> : 
+            <Image src={SquiggleLogoSmall} />
+          }
           {players.length !== 0 ? 
             <PlayerIcon 
               players={players} 
               playerTurnIndex={playerTurnIndex} 
               playerImages={playerImages} 
               playerPoints={playerPoints} 
-            /> : ''}
+            /> : 
+            ''
+          }
         </header>
         {this.renderView()}
       </div>
     )
   }
-
 }

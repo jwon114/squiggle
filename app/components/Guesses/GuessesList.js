@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Form, Checkbox, Header, Button, Message, Label, Step } from 'semantic-ui-react'
 import './GuessesList.scss'
 import _ from 'lodash'
@@ -96,4 +97,11 @@ export default class GuessesList extends React.Component {
       </div>
     )
   }
+}
+
+GuessesList.propTypes = {
+  sendGuesses: PropTypes.func,
+  players: PropTypes.array,
+  playerAnswers: PropTypes.array,
+  playerTurnIndex: PropTypes.number
 }

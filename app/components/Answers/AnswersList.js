@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button, Form, Header, Message } from 'semantic-ui-react'
 import './AnswersList.scss'
 import _ from 'lodash'
@@ -103,4 +104,8 @@ export default class AnswersList extends React.Component {
       </div>
     )
   }
+}
+
+AnswersList.propTypes = {
+  playerAnswers: PropTypes.func
 }

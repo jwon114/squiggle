@@ -26,11 +26,16 @@ body {
   margin: 0 auto; 
 }
 
-.answers_main, .guesses_main, .results_details {
+.answers_main, .guesses_details, .results_details {
   display: flex;
   width: 98%;
   margin: 0 auto;
   height: 75vh;
+}
+
+.guesses_footer {
+  width: 98%;
+  margin: 0 auto;
 }
 
 .results_main {
@@ -38,7 +43,7 @@ body {
 }
 
 .results_footer {
-  margin: 20px 2%;
+  margin: 1% 2%;
   display: flex;
   justify-content: flex-end;
 }

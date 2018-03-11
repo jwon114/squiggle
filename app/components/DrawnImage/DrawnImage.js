@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './DrawnImage.scss'
 
 export default function DrawnImage(props) {
@@ -15,4 +16,10 @@ export default function DrawnImage(props) {
       }>
     </div>
   )
+}
+
+DrawnImage.propTypes = {
+  drawing: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string
 }

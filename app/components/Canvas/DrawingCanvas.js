@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { SketchField, Tools } from 'react-sketch'
 import { Dropdown, Button, Label, Icon } from 'semantic-ui-react'
 import { CompactPicker, CirclePicker } from 'react-color'
@@ -167,10 +168,28 @@ export default class DrawingCanvas extends React.Component {
           </div>
         </div>
         <div className='drawingCanvas__submit_button_container'>
-          <Button size='large' disabled={this.props.round !== 1} onClick={() => this.props.goBack()}>Go Back</Button>
-          <Button size='huge' onClick={() => this.updateSketch()}>Submit Drawing</Button>
+          <Button 
+            animated
+            size='large' 
+            disabled={this.props.round !== 1} 
+            onClick={() => this.props.goBack()}>
+            <Button.Content visible>Go Back</Button.Content>
+            <Button.Content hidden>
+              <Icon name='left arrow' />
+            </Button.Content>
+          </Button>
+          <Button 
+            size='huge' 
+            onClick={() => this.updateSketch()}>Submit Drawing
+          </Button>
         </div>
       </div>
     )
   }
+}
+
+DrawingCanvas.propTypes = {
+  sketchRef: PropTypes.func,
+  round: PropTypes.number,
+  goBack: PropTypes.func
 }

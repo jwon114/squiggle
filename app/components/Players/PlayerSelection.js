@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button, Card, Input, Message, Header, Image } from 'semantic-ui-react'
 import P1Image from './images/doge.png'
 import P2Image from './images/pun_dog.jpg'
@@ -196,4 +197,8 @@ export default class PlayerSelection extends React.Component {
       </div>
     )
   }
+}
+
+PlayerSelection.propTypes = {
+  updateNames: PropTypes.func
 }

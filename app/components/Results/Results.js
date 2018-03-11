@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Header, Label, Image } from 'semantic-ui-react'
 import SquiggleLogoSmall from '../../../public/images/squiggle_logo_small.png'
 import CountUp from 'react-countup'
@@ -56,4 +57,13 @@ export default function Results(props) {
         </div>
     </div>
   )
+}
+
+Results.propTypes = {
+  guesses: PropTypes.object,
+  correctAnswer: PropTypes.string,
+  playerAnswer: PropTypes.array,
+  players: PropTypes.array,
+  playerImages: PropTypes.object,
+  playerPoints: PropTypes.object
 }

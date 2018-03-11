@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Label, Image, Icon, Header } from 'semantic-ui-react'
 import P1Image from './images/doge.png'
 import P2Image from './images/pun_dog.jpg'
@@ -30,4 +31,11 @@ export default function PlayerIcon(props) {
       ))}
     </div>
   )
+}
+
+PlayerIcon.propTypes = {
+  players: PropTypes.array,
+  playerTurnIndex: PropTypes.number,
+  playerImages: PropTypes.object,
+  playerPoints: PropTypes.object
 }
