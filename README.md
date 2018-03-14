@@ -7,19 +7,19 @@ A game up to 4 players where you draw an image and others guess! Points are awar
 
 ## Inspired By
 
-..* DrawSomething
-..* Drawful 2
+* DrawSomething
+* Drawful 2
 
 ## Tech Used
 
-..* React
-..* Semantic UI React
-..* React-Color (https://github.com/casesandberg/react-color)
-..* React-Sketch (https://github.com/tbolis/react-sketch)
-..* React-Countup (https://github.com/glennreyes/react-countup)
+* React
+* Semantic UI React
+* React-Color (https://github.com/casesandberg/react-color)
+* React-Sketch (https://github.com/tbolis/react-sketch)
+* React-Countup (https://github.com/glennreyes/react-countup)
 
 ## To Do List
 
-..* Timer for taking turns
-..* The game providing words to use
-..* Network play
+* Timer for taking turns
+* The game providing words to use
+* Network play
