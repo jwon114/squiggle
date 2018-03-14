@@ -42,7 +42,7 @@ export default class GuessesList extends React.Component {
   }
   
   render() {
-    const { playerIndex, selectedAnswer, slicedPlayers, playerAnswers } = this.state
+    const { playerIndex, selectedAnswer, slicedPlayers, playerAnswers, initialSeconds } = this.state
     return (
       <div className='guessesList__container'>
         <Header textAlign='center' size='large'>Guess the Drawing</Header>
@@ -92,7 +92,17 @@ export default class GuessesList extends React.Component {
               />
             </Form.Field>
           </Form>
-          {playerIndex !== slicedPlayers.length - 1 ? <Button size='huge' onClick={() => this.submitGuess()}>Submit</Button> : <Button size='huge' onClick={() => this.finalGuesses()}>Submit and See Results</Button>}
+          {playerIndex !== slicedPlayers.length - 1 ? 
+            <Button 
+              size='huge' 
+              disabled={selectedAnswer === ''}
+              onClick={() => this.submitGuess()}>Submit
+            </Button> : 
+            <Button 
+              size='huge' 
+              disabled={selectedAnswer === ''}
+              onClick={() => this.finalGuesses()}>Submit and See Results
+            </Button>}
         </div>
       </div>
     )

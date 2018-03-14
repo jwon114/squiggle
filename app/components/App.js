@@ -6,7 +6,7 @@ import DrawnImage from './DrawnImage/DrawnImage'
 import AnswersList from './Answers/AnswersList'
 import GuessesList from './Guesses/GuessesList'
 import Results from './Results/Results'
-import Countdown from './Countdown/Countdown'
+import FinalResults from './FinalResults/FinalResults'
 import SquiggleLogoFull from '../../public/images/squiggle_logo_full.png'
 import SquiggleLogoSmall from '../../public/images/squiggle_logo_small.png'
 import { Button, Image, Icon } from 'semantic-ui-react'
@@ -18,7 +18,7 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       view: 'players',
-      viewsList: ['players', 'draw', 'answers', 'guesses', 'results'],
+      viewsList: ['players', 'draw', 'answers', 'guesses', 'results', 'final'],
       drawingURL: '',
       players: [],
       playerImages: {},
@@ -27,7 +27,7 @@ export default class App extends React.Component {
       playerTurnIndex: 0,
       guesses: {},
       round: 1,
-      playerPoints: {}
+      playerPoints: {}    
     }
   }
 
@@ -83,12 +83,8 @@ export default class App extends React.Component {
     })
   }
 
-  countdownComplete() {
-    console.log('countdown completed')
-  }
-
   showFinalResult() {
-    console.log('show final result')
+    this.setState({ view: 'final' })
   }
 
   renderView() {
@@ -144,12 +140,6 @@ export default class App extends React.Component {
                 playerTurnIndex={playerTurnIndex}
               />
             </div>
-            <div className='guesses_footer'>
-              <Countdown 
-                count={30}
-                onComplete={() => this.countdownComplete()}
-              />
-            </div>  
           </div>
         )
       case 'results':
@@ -188,6 +178,15 @@ export default class App extends React.Component {
                 </Button>
               }
             </div>
+          </div>
+        )
+      case 'final':
+        return(
+          <div className='finalResults_main'>
+            <FinalResults
+              playerPoints={playerPoints}
+              playerImages={playerImages}
+            />
           </div>
         )
       default:

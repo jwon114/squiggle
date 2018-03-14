@@ -27,7 +27,7 @@ export default function Results(props) {
     <div className='results__container'>
       <Header textAlign='center' size='large'>Results</Header>
           <Label size='huge'>the correct answer is... </Label>
-          <Header>{correctAnswer}</Header>
+          <Header textAlign='center'>{correctAnswer}</Header>
           <Label size='huge'>players who got it correct: </Label>
         <div className='results__playerScores_container'>
           {correctPlayers.map((player, index) => (
